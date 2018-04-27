@@ -4,8 +4,11 @@ import info.keloud.tec.ev3lejos.sensor.ColorSensor;
 import info.keloud.tec.ev3lejos.sensor.GyroSensor;
 import info.keloud.tec.ev3lejos.sensor.UltrasonicSensor;
 import lejos.hardware.Battery;
+import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Stopwatch;
+
+import java.awt.*;
 
 public class SensorUpdater extends Thread {
     ColorSensor colorSensor;
@@ -25,6 +28,7 @@ public class SensorUpdater extends Thread {
 
     @Override
     public void run() {
+        int flg = 0;
         super.run();
         try {
             while (stopFlag) {
@@ -41,6 +45,11 @@ public class SensorUpdater extends Thread {
                 LCD.clear(7);
                 LCD.drawString("Timer:" + stopwatch.elapsed(), 1, 7);
                 LCD.refresh();
+                //1分後にマシンを停止させる
+                if(stopwatch.elapsed() >= 60000){
+                    Sound.twoBeeps();
+                    System.exit(0);
+                }
                 Thread.sleep(500);
 
             }
