@@ -32,17 +32,17 @@ public class SensorUpdater extends Thread {
         try {
             while (updaterFlag) {
                 LCD.clear(0);
-                LCD.drawString(String.valueOf((float) ((Battery.getVoltage() * 10 + 0.5) / 10.0)), 15, 0);
+                LCD.drawString(String.valueOf((float) ((Battery.getVoltage() * 10 + 0.5) / 10.0)), 13, 0);
                 LCD.clear(1);
                 //LCD.drawString("L:" + accumulationleftMotor + " R:" + accumulationrightMotor + " C:" + accumulationcenterMotor, 1, 1);
                 LCD.clear(2);
                 LCD.drawString("ColorId:" + colorSensor.getValue(), 1, 2);
                 LCD.clear(3);
-                LCD.drawString("USonic:" + ultrasonicSensor.getValue(), 1, 3);
+                LCD.drawString("USonic :" + ultrasonicSensor.getValue(), 1, 3);
                 LCD.clear(4);
-                LCD.drawString("Gyro:" + gyroSensor.getValue(), 1, 4);
+                LCD.drawString("Gyro   :" + gyroSensor.getValue(), 1, 4);
                 LCD.clear(7);
-                LCD.drawString("Timer:" + stopwatch.elapsed(), 1, 7);
+                LCD.drawString("Timer  :" + stopwatch.elapsed(), 1, 7);
                 LCD.refresh();
                 //1分後にマシンを停止させる
                 if (stopwatch.elapsed() >= 60000 && stopwatchFlag) {
