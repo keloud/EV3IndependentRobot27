@@ -1,11 +1,11 @@
 package info.keloud.tec.ev3lejos.motor;
 
-import info.keloud.tec.ev3lejos.motor.AbstractMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.TachoMotorPort;
 
-public class CenterMotor extends AbstractMotor {
-    public CenterMotor() {
-        regulatedMotor = new EV3MediumRegulatedMotor(MotorPort.A);
+public class CenterMotor extends EV3MediumRegulatedMotor{
+    public CenterMotor(TachoMotorPort port) {
+        super(port);
     }
 }
