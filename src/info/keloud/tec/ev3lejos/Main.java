@@ -1,13 +1,15 @@
 package info.keloud.tec.ev3lejos;
 
 import info.keloud.tec.ev3lejos.manager.SensorUpdater;
-import info.keloud.tec.ev3lejos.motor.*;
 import info.keloud.tec.ev3lejos.sensor.ColorSensor;
 import info.keloud.tec.ev3lejos.sensor.GyroSensor;
 import info.keloud.tec.ev3lejos.sensor.UltrasonicSensor;
 import lejos.hardware.Button;
+import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
-import lejos.robotics.RegulatedMotor;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.EV3MediumRegulatedMotor;
+import lejos.hardware.port.MotorPort;
 import lejos.utility.Delay;
 
 public class Main {
@@ -36,14 +38,11 @@ public class Main {
         LCD.clear(5);
         LCD.drawString("Init Motor", 1, 5);
         LCD.refresh();
-        // モーターの初期化
-        CenterTachoMotorPort centerTachoMotorPort = new CenterTachoMotorPort();
-        CenterMotor centerMotor = new CenterMotor(centerTachoMotorPort);
-        LeftTachoMotorPort leftTachoMotorPort = new LeftTachoMotorPort();
-        LeftMotor leftMotor = new LeftMotor(leftTachoMotorPort);
-        RightTachoMotorPort rightTachoMotorPort = new RightTachoMotorPort();
-        RightMotor rightMotor = new RightMotor(rightTachoMotorPort);
-        leftMotor.synchronizeWith(new RegulatedMotor[]{rightMotor});
+        // モーターの初期
+        EV3MediumRegulatedMotor centerMotor = new EV3MediumRegulatedMotor(MotorPort.A);
+        EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.B);
+        EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.C);
+        leftMotor.synchronizeWith(new EV3LargeRegulatedMotor[]{rightMotor});
 
         // ディスプレイ案内の更新
         LCD.clear(5);
@@ -51,14 +50,19 @@ public class Main {
         LCD.refresh();
         //センサ――と画面更新用スレッドの生成
         SensorUpdater sensorUpdater = new SensorUpdater(colorSensor, ultrasonicSensor, gyroSensor);
-        sensorUpdater.run();
+        sensorUpdater.start();
 
+        //モーターの動作命令部
+        Sound.beep();
         LCD.clear(5);
         LCD.drawString("in Action", 1, 5);
         LCD.refresh();
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
-        /*leftMotor.startSynchronization();
+
+        sensorUpdater.setStopwatchFlag(true);
+
+        leftMotor.startSynchronization();
         leftMotor.setSpeed(500);
         rightMotor.setSpeed(500);
         leftMotor.forward();
@@ -66,10 +70,10 @@ public class Main {
         Delay.msDelay(10000);
         leftMotor.endSynchronization();
         leftMotor.stop();
-        rightMotor.stop();*/
+        rightMotor.stop();
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
-        sensorUpdater.setStop();
+        sensorUpdater.stopUpdaterFlag();
     }
 }

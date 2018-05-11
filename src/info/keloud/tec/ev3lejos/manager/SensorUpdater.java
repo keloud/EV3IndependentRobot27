@@ -8,30 +8,29 @@ import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Stopwatch;
 
-import java.awt.*;
-
 public class SensorUpdater extends Thread {
-    ColorSensor colorSensor;
-    UltrasonicSensor ultrasonicSensor;
-    GyroSensor gyroSensor;
-    Stopwatch stopwatch;
+    private ColorSensor colorSensor;
+    private UltrasonicSensor ultrasonicSensor;
+    private GyroSensor gyroSensor;
+    private Stopwatch stopwatch;
 
-    boolean stopFlag;
+    private boolean updaterFlag;
+    private boolean stopwatchFlag;
 
     public SensorUpdater(ColorSensor colorSensor, UltrasonicSensor ultrasonicSensor, GyroSensor gyroSensor) {
         this.colorSensor = colorSensor;
         this.ultrasonicSensor = ultrasonicSensor;
         this.gyroSensor = gyroSensor;
         this.stopwatch = new Stopwatch();
-        stopFlag = true;
     }
 
     @Override
     public void run() {
-        int flg = 0;
         super.run();
+        updaterFlag = true;
+        stopwatchFlag = false;
         try {
-            while (stopFlag) {
+            while (updaterFlag) {
                 LCD.clear(0);
                 LCD.drawString(String.valueOf((float) ((Battery.getVoltage() * 10 + 0.5) / 10.0)), 15, 0);
                 LCD.clear(1);
@@ -46,11 +45,11 @@ public class SensorUpdater extends Thread {
                 LCD.drawString("Timer:" + stopwatch.elapsed(), 1, 7);
                 LCD.refresh();
                 //1分後にマシンを停止させる
-                if(stopwatch.elapsed() >= 60000){
+                if (stopwatch.elapsed() >= 60000 && stopwatchFlag) {
                     Sound.twoBeeps();
                     System.exit(0);
                 }
-                Thread.sleep(500);
+                Thread.sleep(5);
 
             }
         } catch (InterruptedException e) {
@@ -58,7 +57,11 @@ public class SensorUpdater extends Thread {
         }
     }
 
-    public void setStop() {
-        stopFlag = true;
+    public void stopUpdaterFlag() {
+        updaterFlag = false;
+    }
+
+    public void setStopwatchFlag(boolean flg) {
+        stopwatchFlag = flg;
     }
 }
