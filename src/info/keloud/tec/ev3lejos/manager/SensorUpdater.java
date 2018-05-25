@@ -62,6 +62,7 @@ public class SensorUpdater extends Thread {
     }
 
     public void setStopwatchFlag(boolean flg) {
+        stopwatch.reset();
         stopwatchFlag = flg;
     }
 }
