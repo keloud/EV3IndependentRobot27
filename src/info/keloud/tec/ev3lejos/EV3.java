@@ -1,75 +1,73 @@
 package info.keloud.tec.ev3lejos;
 
 import lejos.hardware.Button;
-import lejos.hardware.Sound;
-import lejos.hardware.lcd.LCD;
 
-import static info.keloud.tec.ev3lejos.Main.leftMotor;
-import static info.keloud.tec.ev3lejos.Main.rightMotor;
-import static info.keloud.tec.ev3lejos.Main.sensorUpdater;
+import static info.keloud.tec.ev3lejos.Main.*;
 
 class EV3 {
     EV3() {
 
     }
 
-    void run(){
-        Sound.beep();
-        LCD.clear(5);
-        LCD.drawString("in Action", 1, 5);
-        LCD.refresh();
+    void run() {
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
         sensorUpdater.setStopwatchFlag(true);
-        Sound.beep();
 
-        //動作開始
-        LCD.clear(5);
-        LCD.drawString("Start Synchronization", 1, 5);
-        LCD.refresh();
-        LCD.clear(5);
-        LCD.drawString("Set Speed", 1, 5);
-        LCD.refresh();
-        leftMotor.setSpeed(leftMotor.getMaxSpeed());
-        rightMotor.setSpeed(rightMotor.getMaxSpeed());
-        LCD.clear(5);
-        LCD.drawString("Set Acceleration", 1, 5);
-        LCD.refresh();
-        leftMotor.setAcceleration(6000);
-        rightMotor.setAcceleration(6000);
-        LCD.clear(5);
-        LCD.drawString("Forward", 1, 5);
-        LCD.refresh();
+        //モーター設定
+        float speedInit = 120;
+        leftMotor.setSpeed(speedInit);
+        rightMotor.setSpeed(speedInit);
+
+        //モーターを動作させる
         leftMotor.startSynchronization();
         leftMotor.forward();
         rightMotor.forward();
         leftMotor.endSynchronization();
-        float cum = ((100 / 5.6F / (float) Math.PI) * 360);
-        float endCum = ((leftMotor.getSpeed() / 50 / 5.6F / (float) Math.PI) * 360);
-        while (leftMotor.getTachoCount() <= cum) {
-            LCD.clear(6);
-            LCD.drawString("Forwarding : " + leftMotor.getRotationSpeed(), 1, 6);
-            LCD.refresh();
-            if (leftMotor.getTachoCount() > cum - endCum) {
-                float isSpeed = (leftMotor.getSpeed() - 180) * (cum - leftMotor.getTachoCount()) / endCum + 180;
-                leftMotor.setSpeed(isSpeed);
-                rightMotor.setSpeed(isSpeed);
-            }
-        }
-        LCD.clear(5);
-        LCD.drawString("Stop", 1, 5);
-        LCD.refresh();
-        leftMotor.startSynchronization();
-        leftMotor.flt(true);
-        rightMotor.flt(true);
-        leftMotor.endSynchronization();
 
-        LCD.clear(5);
-        LCD.drawString("Complete", 1, 5);
-        LCD.refresh();
+        //モーターを指定まで動作させ続ける
+        //現在のタコカウントを取得する
+        int tachoCount = leftMotor.getTachoCount();
+        //走らせたい郷里に必要なタコカウントを求める
+        float cumulative = getCumulative(100) + tachoCount;
+        //最大速度
+        int maxSpeed = 800;
+        while (tachoCount <= cumulative) {
+            //加減速処理
+            float speed;
+            if (cumulative - getCumulative(maxSpeed / 26) < tachoCount) {
+                //減速
+                speed = (maxSpeed - speedInit) * (cumulative - tachoCount) / getCumulative(maxSpeed / 26) + speedInit;
+            } else if (tachoCount < getCumulative(5)) {
+                //加速
+                speed = (maxSpeed - speedInit) * tachoCount / getCumulative(5) + speedInit;
+            } else {
+                speed = maxSpeed;
+            }
+
+            //更新処理
+            leftMotor.setSpeed(speed);
+            rightMotor.setSpeed(speed);
+            tachoCount = leftMotor.getTachoCount();
+        }
+
+        //モーターを止める
+        leftMotor.startSynchronization();
+        leftMotor.stop(true);
+        rightMotor.stop(true);
+        leftMotor.endSynchronization();
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
         sensorUpdater.stopUpdaterFlag();
+    }
+
+    //centimeter単位で指定
+    //タコカウント用に変換する
+    private float getCumulative(int distance) {
+        //タイヤ直径
+        float diameter = 5.6F;
+        //指定した距離に必要なタコカウント
+        return (distance / diameter / (float) Math.PI) * 360;
     }
 }
