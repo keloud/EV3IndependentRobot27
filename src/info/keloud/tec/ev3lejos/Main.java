@@ -14,10 +14,10 @@ public class Main {
     public static ColorSensor colorSensor;
     public static UltrasonicSensor ultrasonicSensor;
     public static GyroSensor gyroSensor;
-    public static SensorUpdater sensorUpdater;
     public static EV3MediumRegulatedMotor centerMotor;
     public static EV3LargeRegulatedMotor leftMotor;
     public static EV3LargeRegulatedMotor rightMotor;
+    static SensorUpdater sensorUpdater;
 
     public static void main(String[] args) {
         // ディスプレイ案内開始
