@@ -1,40 +1,32 @@
 package info.keloud.tec.ev3lejos.manager;
 
-import info.keloud.tec.ev3lejos.sensor.ColorSensor;
-import info.keloud.tec.ev3lejos.sensor.GyroSensor;
-import info.keloud.tec.ev3lejos.sensor.UltrasonicSensor;
 import lejos.hardware.Battery;
 import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Stopwatch;
 
-public class SensorUpdater extends Thread {
-    private ColorSensor colorSensor;
-    private UltrasonicSensor ultrasonicSensor;
-    private GyroSensor gyroSensor;
-    private Stopwatch stopwatch;
+import static info.keloud.tec.ev3lejos.Main.*;
 
+public class SensorUpdater extends Thread {
+    private Stopwatch stopwatch;
     private boolean updaterFlag;
     private boolean stopwatchFlag;
 
-    public SensorUpdater(ColorSensor colorSensor, UltrasonicSensor ultrasonicSensor, GyroSensor gyroSensor) {
-        this.colorSensor = colorSensor;
-        this.ultrasonicSensor = ultrasonicSensor;
-        this.gyroSensor = gyroSensor;
-        this.stopwatch = new Stopwatch();
+    public SensorUpdater() {
+        stopwatch = new Stopwatch();
+        updaterFlag = true;
+        stopwatchFlag = false;
     }
 
     @Override
     public void run() {
         super.run();
-        updaterFlag = true;
-        stopwatchFlag = false;
         try {
             while (updaterFlag) {
                 LCD.clear(0);
                 LCD.drawString(String.valueOf((float) ((Battery.getVoltage() * 10 + 0.5) / 10.0)), 13, 0);
                 LCD.clear(1);
-                //LCD.drawString("L:" + accumulationleftMotor + " R:" + accumulationrightMotor + " C:" + accumulationcenterMotor, 1, 1);
+                LCD.drawString("L:" + leftMotor.getTachoCount() + " R:" + rightMotor.getTachoCount() + " C:" + centerMotor.getTachoCount(), 1, 1);
                 LCD.clear(2);
                 LCD.drawString("ColorId:" + colorSensor.getValue(), 1, 2);
                 LCD.clear(3);
