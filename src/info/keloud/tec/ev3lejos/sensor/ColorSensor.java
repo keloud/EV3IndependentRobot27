@@ -14,7 +14,7 @@ public class ColorSensor {
 
     // NONE, BLACK, BLUE, GREEN, YELLOW, RED, WHITE, BROWN
     public float getValue() {
-        color.getColorIDMode().fetchSample(colorValue, 0);
+        color.getRedMode().fetchSample(colorValue, 0);
         return colorValue[0];
     }
 }

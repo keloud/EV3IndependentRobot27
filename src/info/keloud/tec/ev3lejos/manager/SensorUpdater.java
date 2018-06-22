@@ -43,7 +43,7 @@ public class SensorUpdater extends Thread {
                     Sound.twoBeeps();
                     System.exit(0);
                 }
-                Thread.sleep(5);
+                Thread.sleep(1000);
 
             }
         } catch (InterruptedException e) {

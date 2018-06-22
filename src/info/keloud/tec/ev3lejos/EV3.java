@@ -28,16 +28,19 @@ class EV3 {
         //モーターを指定まで動作させ続ける
         //現在のタコカウントを取得する
         int tachoCount = leftMotor.getTachoCount();
-        //走らせたい郷里に必要なタコカウントを求める
-        float cumulative = getCumulative(100) + tachoCount;
+        //走らせたい距離に必要なタコカウントを求める
+        float cumulative = getCumulative(10000) + tachoCount;
         //最大速度
-        int maxSpeed = 800;
+        int maxSpeed = 200;
+
+        float initRightTacho = rightMotor.getTachoCount();
+        float initLeftTacho = leftMotor.getTachoCount();
         while (tachoCount <= cumulative) {
             //加減速処理
             float speed;
-            if (cumulative - getCumulative(maxSpeed / 26) < tachoCount) {
+            if (cumulative - getCumulative(maxSpeed / 24) < tachoCount) {
                 //減速
-                speed = (maxSpeed - speedInit) * (cumulative - tachoCount) / getCumulative(maxSpeed / 26) + speedInit;
+                speed = (maxSpeed - speedInit) * (cumulative - tachoCount) / getCumulative(maxSpeed / 24) + speedInit;
             } else if (tachoCount < getCumulative(5)) {
                 //加速
                 speed = (maxSpeed - speedInit) * tachoCount / getCumulative(5) + speedInit;
@@ -45,9 +48,37 @@ class EV3 {
                 speed = maxSpeed;
             }
 
+            //カラーセンサー
+            float speedRight = speed;
+            float speedLeft = speed;
+            float colorValue = colorSensor.getValue();
+
+            //いい感じ制御(加速を流用する)
+            if (0.8 < colorValue) {
+                initLeftTacho = leftMotor.getTachoCount();
+                float rightTacho = rightMotor.getTachoCount() - initRightTacho;
+                speedRight = (maxSpeed * 1.6F - speed) * rightTacho / getCumulative(4) + speed;
+            } else if (colorValue < 0.4) {
+                initRightTacho = rightMotor.getTachoCount();
+                float leftTacho = leftMotor.getTachoCount() - initLeftTacho;
+                speedLeft = (maxSpeed * 1.6F - speed) * leftTacho / getCumulative(4) + speed;
+            } else {
+                initLeftTacho = leftMotor.getTachoCount();
+                initRightTacho = rightMotor.getTachoCount();
+            }
+
+            /*
+            On Off制御
+            if (0.68 < colorValue) {
+                speedRight = speed * 1.38F;
+            } else if (colorValue < 0.5){
+                speedLeft = speed * 1.68F;
+            }
+            */
+
             //更新処理
-            leftMotor.setSpeed(speed);
-            rightMotor.setSpeed(speed);
+            leftMotor.setSpeed(speedLeft);
+            rightMotor.setSpeed(speedRight);
             tachoCount = leftMotor.getTachoCount();
         }
 
