@@ -43,9 +43,24 @@ class EV3 {
                     speed = maxSpeed;
                 }*/
 
-                //カラーセンサー
+                //スピード
                 float speedRight = speed;
                 float speedLeft = speed;
+
+                /*超音波*/
+                float usonicValue = ultrasonicSensor.getValue();
+                float targetUSonicValue = 0.5F;
+                if (targetUSonicValue < usonicValue) {
+                    leftMotor.forward();
+                    rightMotor.forward();
+                } else {
+                    leftMotor.backward();
+                    rightMotor.backward();
+                }
+
+                /*カラーセンサー用
+
+                //カラーセンサー
                 float colorValue = colorSensor.getValue();
 
                 //坂本P制御
@@ -86,6 +101,7 @@ class EV3 {
                     speedLeft = speed * 1.68F;
                 }
                 */
+
 
                 //更新処理
                 leftMotor.setSpeed(speedLeft);

@@ -11,13 +11,13 @@ import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 
 public class Main {
-    static ColorSensor colorSensor;
-    static UltrasonicSensor ultrasonicSensor;
-    static GyroSensor gyroSensor;
-    static EV3MediumRegulatedMotor centerMotor;
-    static EV3LargeRegulatedMotor leftMotor;
-    static EV3LargeRegulatedMotor rightMotor;
-    static SensorUpdater sensorUpdater;
+    public static ColorSensor colorSensor;
+    public static UltrasonicSensor ultrasonicSensor;
+    public static GyroSensor gyroSensor;
+    public static EV3MediumRegulatedMotor centerMotor;
+    public static EV3LargeRegulatedMotor leftMotor;
+    public static EV3LargeRegulatedMotor rightMotor;
+    public static SensorUpdater sensorUpdater;
 
     public static void main(String[] args) {
         // ディスプレイ案内開始
