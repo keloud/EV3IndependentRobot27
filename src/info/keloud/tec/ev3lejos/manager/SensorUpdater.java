@@ -25,6 +25,7 @@ public class SensorUpdater extends Thread {
             while (updaterFlag) {
                 LCD.clear(0);
                 LCD.drawString(String.valueOf((float) ((Battery.getVoltage() * 10 + 0.5) / 10.0)), 13, 0);
+                /*
                 LCD.clear(1);
                 LCD.drawString("L:" + leftMotor.getTachoCount() + " R:" + rightMotor.getTachoCount() + " C:" + centerMotor.getTachoCount(), 1, 1);
                 LCD.clear(2);
@@ -35,6 +36,7 @@ public class SensorUpdater extends Thread {
                 LCD.drawString("USonic :" + ultrasonicSensor.getValue(), 1, 4);
                 LCD.clear(5);
                 LCD.drawString("Gyro   :" + gyroSensor.getValue(), 1, 5);
+                */
                 LCD.clear(7);
                 LCD.drawString("Timer  :" + stopwatch.elapsed(), 1, 7);
                 LCD.refresh();
