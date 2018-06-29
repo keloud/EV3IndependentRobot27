@@ -2,7 +2,6 @@ package info.keloud.tec.ev3lejos;
 
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
-import lejos.hardware.lcd.LCD;
 
 import static info.keloud.tec.ev3lejos.Main.*;
 
@@ -29,7 +28,7 @@ class EV3 {
 
         //モーターを動作させ続ける
         //巡航速度
-        float speed = (float) 320;
+        float speed = (float) 380;
         try {
             while (true) {
                 //加減速処理
@@ -52,12 +51,12 @@ class EV3 {
                 //坂本P制御
                 float targetColorValue = 0.55F;
                 //白色を検知した時
-                if (targetColorValue + 0.1 < colorValue) {
-                    speedLeft -= (colorValue - targetColorValue) * 480F;
+                if (targetColorValue < colorValue) {
+                    speedLeft -= (colorValue - targetColorValue) * 360F;
                 }
                 //黒色を検知した時
-                if (targetColorValue - 0.1 > colorValue) {
-                    speedLeft += (targetColorValue - colorValue) * 540F;
+                if (targetColorValue > colorValue) {
+                    speedRight -= (targetColorValue - colorValue) * 360F;
                 }
 
                 /*
