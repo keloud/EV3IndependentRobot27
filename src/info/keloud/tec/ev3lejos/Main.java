@@ -3,6 +3,7 @@ package info.keloud.tec.ev3lejos;
 import info.keloud.tec.ev3lejos.manager.SensorUpdater;
 import info.keloud.tec.ev3lejos.sensor.ColorSensor;
 import info.keloud.tec.ev3lejos.sensor.GyroSensor;
+import info.keloud.tec.ev3lejos.sensor.TouchSensor;
 import info.keloud.tec.ev3lejos.sensor.UltrasonicSensor;
 import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
@@ -14,6 +15,7 @@ public class Main {
     public static ColorSensor colorSensor;
     public static UltrasonicSensor ultrasonicSensor;
     public static GyroSensor gyroSensor;
+    public static TouchSensor touchSensor;
     public static EV3MediumRegulatedMotor centerMotor;
     public static EV3LargeRegulatedMotor leftMotor;
     public static EV3LargeRegulatedMotor rightMotor;
@@ -26,18 +28,28 @@ public class Main {
         LCD.refresh();
         // カラーセンサーの初期化
         colorSensor = new ColorSensor();
+
         // ディスプレイ案内更新
         LCD.clear(6);
         LCD.drawString("Init UltrasonicSensor", 1, 6);
         LCD.refresh();
         // 超音波センサーの初期化
         ultrasonicSensor = new UltrasonicSensor();
+
         // ディスプレイ案内の更新
         LCD.clear(6);
         LCD.drawString("Init GyroSensor", 1, 6);
         LCD.refresh();
         // ジャイロセンサーの初期化
         gyroSensor = new GyroSensor();
+
+        // ディスプレイ案内の更新
+        LCD.clear(6);
+        LCD.drawString("Init TouchSensor", 1, 6);
+        LCD.refresh();
+        // タッチセンサーの初期化
+        touchSensor = new TouchSensor();
+
         // ディスプレイ案内の更新
         LCD.clear(6);
         LCD.drawString("Init Motor", 1, 6);

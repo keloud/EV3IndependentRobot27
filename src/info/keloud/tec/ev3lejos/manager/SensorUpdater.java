@@ -35,6 +35,8 @@ public class SensorUpdater extends Thread {
                 LCD.drawString("USonic :" + ultrasonicSensor.getValue(), 1, 4);
                 LCD.clear(5);
                 LCD.drawString("Gyro   :" + gyroSensor.getValue(), 1, 5);
+                LCD.clear(6);
+                LCD.drawString("Touch  :" + touchSensor.getValue(), 1, 6);
                 LCD.clear(7);
                 LCD.drawString("Timer  :" + stopwatch.elapsed(), 1, 7);
                 LCD.refresh();
@@ -43,7 +45,7 @@ public class SensorUpdater extends Thread {
                     Sound.twoBeeps();
                     System.exit(0);
                 }
-                Thread.sleep(1000);
+                Thread.sleep(5);
 
             }
         } catch (InterruptedException e) {

@@ -15,24 +15,32 @@ class EV3 {
         Button.ENTER.waitForPress();
         sensorUpdater.setStopwatchFlag(true);
 
-        //モーター設定
-        float speedInit = 120;
-        leftMotor.setSpeed(speedInit);
-        rightMotor.setSpeed(speedInit);
-
-        //モーターを動作させる
-        leftMotor.startSynchronization();
-        leftMotor.forward();
-        rightMotor.forward();
-        leftMotor.endSynchronization();
-
-        //モーターを動作させ続ける
-        //巡航速度
-        float speed = (float) 380;
         try {
-            while (true) {
+            //モーターを動作させ続ける
+            //タコカウントの初期値を設定する
+            int initTachoCount = leftMotor.getTachoCount();
+            //現在のタコカウントを取得する
+            int tachoCount = 0;
+            //走らせたい郷里に必要なタコカウントを求める
+            float cumulative = getCumulative(80);
+
+            //巡航速度
+            float maxSpeed = 800;
+
+            //モーター設定
+            float speedInit = 120;
+            leftMotor.setSpeed(speedInit);
+            rightMotor.setSpeed(speedInit);
+
+            //モーターを動作させる
+            leftMotor.startSynchronization();
+            leftMotor.forward();
+            rightMotor.forward();
+            leftMotor.endSynchronization();
+
+            while (tachoCount <= cumulative) {
                 //加減速処理
-                /*
+                float speed;
                 if (cumulative - getCumulative(maxSpeed / 24) < tachoCount) {
                     //減速
                     speed = (maxSpeed - speedInit) * (cumulative - tachoCount) / getCumulative(maxSpeed / 24) + speedInit;
@@ -41,13 +49,18 @@ class EV3 {
                     speed = (maxSpeed - speedInit) * tachoCount / getCumulative(5) + speedInit;
                 } else {
                     speed = maxSpeed;
-                }*/
+                }
 
                 //スピード
                 float speedRight = speed;
                 float speedLeft = speed;
 
-                /*超音波*/
+                //タッチセンサ
+                if (touchSensor.getValue() == 1.0) {
+                    Sound.beep();
+                }
+
+                /*超音波
                 float usonicValue = ultrasonicSensor.getValue();
                 float targetUSonicValue = 0.5F;
                 if (targetUSonicValue < usonicValue) {
@@ -56,7 +69,7 @@ class EV3 {
                 } else {
                     leftMotor.backward();
                     rightMotor.backward();
-                }
+                }*/
 
                 /*カラーセンサー用
 
@@ -106,18 +119,80 @@ class EV3 {
                 //更新処理
                 leftMotor.setSpeed(speedLeft);
                 rightMotor.setSpeed(speedRight);
+                tachoCount = leftMotor.getTachoCount() - initTachoCount;
             }
         } catch (Exception e) {
             Sound.buzz();
         } finally {
             Sound.beepSequenceUp();
+            //モーターを止める
+            leftMotor.startSynchronization();
+            leftMotor.stop(true);
+            rightMotor.stop(true);
+            leftMotor.endSynchronization();
         }
 
-        //モーターを止める
-        leftMotor.startSynchronization();
-        leftMotor.stop(true);
-        rightMotor.stop(true);
-        leftMotor.endSynchronization();
+        //後ろに下がる
+        try {
+            //モーターを動作させ続ける
+            //タコカウントの初期値を設定する
+            int initTachoCount = leftMotor.getTachoCount();
+            //現在のタコカウントを取得する
+            int tachoCount = 0;
+            //走らせたい距離に必要なタコカウントを求める
+            float cumulative = getCumulative(80);
+
+            //巡航速度
+            float maxSpeed = 800;
+
+            //モーター設定
+            float speedInit = 120;
+            leftMotor.setSpeed(speedInit);
+            rightMotor.setSpeed(speedInit);
+
+            //モーターを動作させる
+            leftMotor.startSynchronization();
+            leftMotor.backward();
+            rightMotor.backward();
+            leftMotor.endSynchronization();
+
+            while (tachoCount <= cumulative) {
+                //加減速処理
+                float speed;
+                if (cumulative - getCumulative(maxSpeed / 24) < tachoCount) {
+                    //減速
+                    speed = (maxSpeed - speedInit) * (cumulative - tachoCount) / getCumulative(maxSpeed / 24) + speedInit;
+                } else if (tachoCount < getCumulative(5)) {
+                    //加速
+                    speed = (maxSpeed - speedInit) * tachoCount / getCumulative(5) + speedInit;
+                } else {
+                    speed = maxSpeed;
+                }
+
+                //スピード
+                float speedRight = speed;
+                float speedLeft = speed;
+
+                //タッチセンサ
+                if (touchSensor.getValue() == 1.0) {
+                    Sound.beep();
+                }
+
+                //更新処理
+                leftMotor.setSpeed(speedLeft);
+                rightMotor.setSpeed(speedRight);
+                tachoCount = -(leftMotor.getTachoCount() - initTachoCount);
+            }
+        } catch (Exception e) {
+            Sound.buzz();
+        } finally {
+            Sound.beepSequenceUp();
+            //モーターを止める
+            leftMotor.startSynchronization();
+            leftMotor.stop(true);
+            rightMotor.stop(true);
+            leftMotor.endSynchronization();
+        }
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
@@ -126,7 +201,7 @@ class EV3 {
 
     //centimeter単位で指定
     //タコカウント用に変換する
-    private float getCumulative(int distance) {
+    private float getCumulative(float distance) {
         //タイヤ直径
         float diameter = 5.6F;
         //指定した距離に必要なタコカウント
