@@ -23,7 +23,7 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     @Override
-    public void setSpeed(float speed) {
+    public void setMaxSpeed(float speed) {
         this.maxSpeed = speed;
     }
 
@@ -73,8 +73,13 @@ public abstract class AbstractUtil implements ImplementUtil {
 
     //centimeter単位で指定
     //タコカウント用に変換する
-    public float getCumulative(float distance) {
+    public float distance2Cumulative(float distance) {
         //指定した距離に必要なタコカウント
         return (distance / diameter / (float) Math.PI) * 360;
+    }
+
+    //角度から
+    public float angle2Cumulative(float angle) {
+        return (angle * width * (float) Math.PI) / 360;
     }
 }

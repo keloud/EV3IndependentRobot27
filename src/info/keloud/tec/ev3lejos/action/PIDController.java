@@ -6,8 +6,8 @@ import static info.keloud.tec.ev3lejos.Main.*;
 
 public class PIDController extends AbstractUtil {
     public void run(float speed, float distance) {
-        this.maxSpeed = speed;
-        this.distance = distance;
+        setMaxSpeed(speed);
+        setDistance(distance);
         run();
     }
 
@@ -23,7 +23,7 @@ public class PIDController extends AbstractUtil {
             rightMotor.setSpeed(minSpeed);
 
             // 角度累計計算
-            float cum = getCumulative(distance);
+            float cum = distance2Cumulative(distance);
 
             //速度から必要な距離を求める(可変距離)
             float distanceVariable = maxSpeed * 0.24F;

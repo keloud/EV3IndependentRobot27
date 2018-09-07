@@ -22,6 +22,9 @@ public class Main {
     public static EV3LargeRegulatedMotor rightMotor;
     public static SensorUpdater sensorUpdater;
 
+    //trueならば開いている
+    public static boolean armState = false;
+
     public static void main(String[] args) {
         // ディスプレイ案内開始
         LCD.clear(6);

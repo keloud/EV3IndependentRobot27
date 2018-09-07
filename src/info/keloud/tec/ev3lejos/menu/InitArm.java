@@ -1,10 +1,8 @@
 package info.keloud.tec.ev3lejos.menu;
 
+import info.keloud.tec.ev3lejos.action.Arm;
 import lejos.hardware.Button;
-import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
-
-import static info.keloud.tec.ev3lejos.Main.centerMotor;
 
 public class InitArm {
     public InitArm() {
@@ -19,37 +17,10 @@ public class InitArm {
 
         switch (Button.waitForAnyPress()) {
             case Button.ID_ENTER:
-                armClose();
+                new Arm().run(false);
                 break;
             default:
                 break;
-        }
-    }
-
-    private void armClose() {
-        try {
-            //モーターを動作させ続ける
-            //タコカウントの初期値を設定する
-            int initTachoCount = centerMotor.getTachoCount();
-            //タコカウントを初期化する
-            int tachoCount = 0;
-            //走らせたい郷里に必要なタコカウントを求める
-            float cumulative = 380;
-            //巡航速度
-            centerMotor.setSpeed(300);
-
-            //モーターを動作させる
-            centerMotor.backward();
-
-            //更新処理
-            while (tachoCount <= cumulative) {
-                tachoCount = -(centerMotor.getTachoCount() - initTachoCount);
-            }
-        } catch (Exception e) {
-            Sound.buzz();
-        } finally {
-            Sound.beepSequenceUp();
-            centerMotor.stop(true);
         }
     }
 }
