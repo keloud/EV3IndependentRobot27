@@ -1,6 +1,7 @@
 package info.keloud.tec.ev3lejos;
 
 import info.keloud.tec.ev3lejos.manager.SensorUpdater;
+import info.keloud.tec.ev3lejos.menu.InitArm;
 import info.keloud.tec.ev3lejos.sensor.ColorSensor;
 import info.keloud.tec.ev3lejos.sensor.GyroSensor;
 import info.keloud.tec.ev3lejos.sensor.TouchSensor;
@@ -60,6 +61,9 @@ public class Main {
         rightMotor = new EV3LargeRegulatedMotor(MotorPort.C);
         leftMotor.synchronizeWith(new EV3LargeRegulatedMotor[]{rightMotor});
 
+        //初期アーム開閉クラスを生成する
+        new InitArm();
+
         // ディスプレイ案内の更新
         LCD.clear(6);
         LCD.drawString("Init Thread", 1, 6);
@@ -76,7 +80,6 @@ public class Main {
         Sound.beep();
 
         //EV3クラスを生成する
-        EV3 ev3 = new EV3();
-        ev3.run();
+        new EV3().run();
     }
 }

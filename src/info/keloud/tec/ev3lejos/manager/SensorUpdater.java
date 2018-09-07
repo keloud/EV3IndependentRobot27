@@ -30,7 +30,7 @@ public class SensorUpdater extends Thread {
                 LCD.clear(2);
                 LCD.drawString("L:" + leftMotor.getSpeed() + " R:" + rightMotor.getSpeed() + " C:" + centerMotor.getSpeed(), 1, 2);
                 LCD.clear(3);
-                LCD.drawString("ColorId:" + colorSensor.getValue(), 1, 3);
+                LCD.drawString("ColorId:" + colorSensor.getColorID(), 1, 3);
                 LCD.clear(4);
                 LCD.drawString("USonic :" + ultrasonicSensor.getValue(), 1, 4);
                 LCD.clear(5);
