@@ -2,11 +2,11 @@ package info.keloud.tec.ev3lejos.action;
 
 import lejos.hardware.Sound;
 
-import static info.keloud.tec.ev3lejos.Main.armState;
 import static info.keloud.tec.ev3lejos.Main.centerMotor;
+import static info.keloud.tec.ev3lejos.Main.isArmOpen;
 
 public class Arm extends AbstractUtil {
-    boolean state;
+    private boolean state;
 
     public void run(boolean state) {
         this.state = state;
@@ -38,7 +38,7 @@ public class Arm extends AbstractUtil {
             // 移動開始
             centerMotor.forward();
 
-            //移動処理
+            // 移動処理
             while (tachoCount < cum) {
                 tachoCount = centerMotor.getTachoCount() - initTachoCount;
             }
@@ -48,8 +48,8 @@ public class Arm extends AbstractUtil {
             Sound.beepSequenceUp();
             // 停止
             centerMotor.stop(true);
-            //アームが開いたことにする
-            armState = true;
+            // アームが開いたことにする
+            isArmOpen = true;
         }
     }
 
@@ -76,8 +76,8 @@ public class Arm extends AbstractUtil {
             Sound.beepSequenceUp();
             // 停止
             centerMotor.stop(true);
-            //アームが閉じたことにする
-            armState = false;
+            // アームが閉じたことにする
+            isArmOpen = false;
         }
     }
 }

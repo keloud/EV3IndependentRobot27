@@ -23,7 +23,7 @@ public class Main {
     public static SensorUpdater sensorUpdater;
 
     //trueならば開いている
-    public static boolean armState = false;
+    public static boolean isArmOpen = false;
 
     public static void main(String[] args) {
         // ディスプレイ案内開始
@@ -64,7 +64,7 @@ public class Main {
         rightMotor = new EV3LargeRegulatedMotor(MotorPort.C);
         leftMotor.synchronizeWith(new EV3LargeRegulatedMotor[]{rightMotor});
 
-        //初期アーム開閉クラスを生成する
+        //初期アーム開閉メニュークラスを生成する
         new InitArm();
 
         // ディスプレイ案内の更新
