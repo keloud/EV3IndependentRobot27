@@ -8,8 +8,8 @@ import static info.keloud.tec.ev3lejos.Main.isArmOpen;
 public class Arm extends AbstractUtil {
     private boolean state;
 
-    public void run(boolean state) {
-        this.state = state;
+    public void run(boolean isArmOpen) {
+        this.state = isArmOpen;
         run();
     }
 
@@ -18,7 +18,8 @@ public class Arm extends AbstractUtil {
         setAngle(290);
         setMaxSpeed(centerMotor.getMaxSpeed());
 
-        if (state) {
+        if (state && !isArmOpen) {
+            // アームを開ける命令かつアームが閉まっているとき
             open();
         } else {
             close();
