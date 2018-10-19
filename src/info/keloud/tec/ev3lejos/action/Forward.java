@@ -52,12 +52,7 @@ public class Forward extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            Sound.beepSequenceUp();
-            // 停止
-            leftMotor.startSynchronization();
-            leftMotor.stop(true);
-            rightMotor.stop(true);
-            leftMotor.endSynchronization();
+            stopLargeMotor();
         }
     }
 }

@@ -15,7 +15,7 @@ public class Arm extends AbstractUtil {
 
     @Override
     public void run() {
-        setAngle(290);
+        setAngle(200);
         setMaxSpeed(centerMotor.getMaxSpeed());
 
         if (state && !isArmOpen) {
@@ -31,7 +31,7 @@ public class Arm extends AbstractUtil {
             // 初期化
             int initTachoCount = centerMotor.getTachoCount();
             int tachoCount = 0;
-            centerMotor.setSpeed(minSpeed);
+            centerMotor.setSpeed(100);
 
             // 角度累計計算
             float cum = angle2Cumulative(angle);
@@ -59,10 +59,10 @@ public class Arm extends AbstractUtil {
             // 初期化
             int initTachoCount = centerMotor.getTachoCount();
             int tachoCount = 0;
-            centerMotor.setSpeed(minSpeed);
+            centerMotor.setSpeed(100);
 
             // 角度累計計算
-            float cum = distance2Cumulative(distance);
+            float cum = angle2Cumulative(angle);
 
             // 移動開始
             centerMotor.backward();

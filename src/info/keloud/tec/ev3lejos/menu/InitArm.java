@@ -20,7 +20,7 @@ public class InitArm {
         switch (Button.waitForAnyPress()) {
             case Button.ID_ENTER:
                 isArmOpen = true;
-                new Arm().run(false);
+                new Arm().run(true);
                 break;
             default:
                 break;

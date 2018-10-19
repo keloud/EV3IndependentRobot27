@@ -1,22 +1,27 @@
 package info.keloud.tec.ev3lejos.action;
 
+import lejos.hardware.Sound;
+
+import static info.keloud.tec.ev3lejos.Main.leftMotor;
+import static info.keloud.tec.ev3lejos.Main.rightMotor;
+
 public abstract class AbstractUtil implements ImplementUtil {
-    // Diameter of tire(cm)
-    protected float diameter = 5.6F;
-    // Width of wheel(cm)
-    protected float width = 8.85F;
     // Max Speed
-    protected float maxSpeed = 500;
+    float maxSpeed = 500;
     // Minimum Spped
-    protected float minSpeed = 100;
+    float minSpeed = 100;
     // Current Speed
-    protected float currentSpeed = 500;
+    float currentSpeed = 500;
     // Distance
-    protected float distance = 0;
+    float distance = 0;
     // Angle
-    protected float angle = 0;
+    float angle = 0;
+    // Diameter of tire(cm)
+    private float diameter = 5.6F;
+    // Width of wheel(cm)
+    private float width = 8.85F;
     // Color
-    protected int colorId = 0;
+    private int colorId = 0;
 
     @Override
     public void run() {
@@ -73,13 +78,27 @@ public abstract class AbstractUtil implements ImplementUtil {
 
     //centimeter単位で指定
     //タコカウント用に変換する
-    public float distance2Cumulative(float distance) {
+    float distance2Cumulative(float distance) {
         //指定した距離に必要なタコカウント
         return (distance / diameter / (float) Math.PI) * 360;
     }
 
-    //角度から
-    public float angle2Cumulative(float angle) {
+    //角度から距離に変換する
+    float angle2Distance(float angle) {
         return (angle * width * (float) Math.PI) / 360;
+    }
+
+    //角度からタコカウント用に変換する
+    float angle2Cumulative(float angle) {
+        return distance2Cumulative(angle2Distance(angle));
+    }
+
+    void stopLargeMotor() {
+        Sound.beepSequenceUp();
+        // 停止
+        leftMotor.startSynchronization();
+        leftMotor.stop(true);
+        rightMotor.stop(true);
+        leftMotor.endSynchronization();
     }
 }
