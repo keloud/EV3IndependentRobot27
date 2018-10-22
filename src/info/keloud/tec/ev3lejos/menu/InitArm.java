@@ -1,10 +1,9 @@
 package info.keloud.tec.ev3lejos.menu;
 
+import info.keloud.tec.ev3lejos.Main;
 import info.keloud.tec.ev3lejos.action.Arm;
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
-
-import static info.keloud.tec.ev3lejos.Main.isArmOpen;
 
 public class InitArm {
     public InitArm() {
@@ -19,8 +18,9 @@ public class InitArm {
 
         switch (Button.waitForAnyPress()) {
             case Button.ID_ENTER:
-                isArmOpen = true;
-                new Arm().run(true);
+                //現在のアームを(開いている)にする
+                Main.isArmOpen = true;
+                new Arm().run();
                 break;
             default:
                 break;

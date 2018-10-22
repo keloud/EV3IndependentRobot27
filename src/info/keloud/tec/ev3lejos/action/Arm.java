@@ -1,84 +1,64 @@
 package info.keloud.tec.ev3lejos.action;
 
+import info.keloud.tec.ev3lejos.Main;
 import lejos.hardware.Sound;
 
 import static info.keloud.tec.ev3lejos.Main.centerMotor;
-import static info.keloud.tec.ev3lejos.Main.isArmOpen;
 
 public class Arm extends AbstractUtil {
-    private boolean state;
-
-    public void run(boolean isArmOpen) {
-        this.state = isArmOpen;
-        run();
-    }
-
     @Override
     public void run() {
-        setAngle(200);
         setMaxSpeed(centerMotor.getMaxSpeed());
+        centerMotor.setAcceleration(1200);
 
-        if (state && !isArmOpen) {
-            // アームを開ける命令かつアームが閉まっているとき
-            open();
-        } else {
+        // アーム開閉状態を取得し、開閉を決める
+        // trueならば開いている
+        if (Main.isArmOpen) {
+            setAngle(-380);
             close();
+        } else {
+            setAngle(340);
+            open();
         }
     }
 
     private void open() {
         try {
             // 初期化
-            int initTachoCount = centerMotor.getTachoCount();
-            int tachoCount = 0;
-            centerMotor.setSpeed(100);
-
-            // 角度累計計算
-            float cum = angle2Cumulative(angle);
-
-            // 移動開始
-            centerMotor.forward();
+            centerMotor.setSpeed(maxSpeed);
 
             // 移動処理
-            while (tachoCount < cum) {
-                tachoCount = centerMotor.getTachoCount() - initTachoCount;
+            centerMotor.rotateTo((int) angle);
+
+            while (centerMotor.isMoving()) {
+                wait(1);
             }
         } catch (Exception e) {
             Sound.buzz();
         } finally {
             Sound.beepSequenceUp();
-            // 停止
-            centerMotor.stop(true);
             // アームが開いたことにする
-            isArmOpen = true;
+            Main.isArmOpen = true;
         }
     }
 
     private void close() {
         try {
             // 初期化
-            int initTachoCount = centerMotor.getTachoCount();
-            int tachoCount = 0;
-            centerMotor.setSpeed(100);
+            centerMotor.setSpeed(maxSpeed);
 
-            // 角度累計計算
-            float cum = angle2Cumulative(angle);
+            // 移動処理
+            centerMotor.rotateTo((int) angle);
 
-            // 移動開始
-            centerMotor.backward();
-
-            //移動処理
-            while (tachoCount < cum) {
-                tachoCount = -(centerMotor.getTachoCount() - initTachoCount);
+            while (centerMotor.isMoving()) {
+                wait(1);
             }
         } catch (Exception e) {
             Sound.buzz();
         } finally {
             Sound.beepSequenceUp();
-            // 停止
-            centerMotor.stop(true);
             // アームが閉じたことにする
-            isArmOpen = false;
+            Main.isArmOpen = false;
         }
     }
 }
