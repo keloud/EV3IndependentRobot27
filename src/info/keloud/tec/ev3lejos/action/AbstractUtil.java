@@ -93,6 +93,12 @@ public abstract class AbstractUtil implements ImplementUtil {
         return distance2Cumulative(angle2Distance(angle));
     }
 
+    // タイヤの円周を返す
+    float getTireCircumference() {
+        return (float) (diameter * Math.PI);
+    }
+
+    // タイヤ駆動部を止める
     void stopLargeMotor() {
         Sound.beepSequenceUp();
         // 停止
@@ -100,5 +106,15 @@ public abstract class AbstractUtil implements ImplementUtil {
         leftMotor.stop(true);
         rightMotor.stop(true);
         leftMotor.endSynchronization();
+    }
+
+    // 車体の回転円周を返す
+    float getMachineCircumference() {
+        return (float) (width * Math.PI);
+    }
+
+    // sleep処理
+    void sleep() throws InterruptedException {
+        Thread.sleep(1);
     }
 }

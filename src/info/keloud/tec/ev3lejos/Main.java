@@ -64,16 +64,19 @@ public class Main {
         rightMotor = new EV3LargeRegulatedMotor(MotorPort.C);
         leftMotor.synchronizeWith(new EV3LargeRegulatedMotor[]{rightMotor});
 
-        //初期アーム開閉メニュークラスを生成する
+        // 初期アーム開閉メニュークラスを生成する
         new InitArm();
 
         // ディスプレイ案内の更新
         LCD.clear(6);
         LCD.drawString("Init Thread", 1, 6);
         LCD.refresh();
-        //センサ――と画面更新用スレッドの生成
+        // センサ――と画面更新用スレッドの生成
         sensorUpdater = new SensorUpdater();
         sensorUpdater.start();
+
+        // Gyroの再初期化
+        gyroSensor.initGyro();
 
         //ディスプレイ案内の更新
         LCD.clear(6);

@@ -5,10 +5,10 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.leftMotor;
 import static info.keloud.tec.ev3lejos.Main.rightMotor;
 
-public class Forward extends AbstractUtil {
-    public void run(float speed, float distance) {
+public class TurnRight extends AbstractUtil {
+    public void run(float speed, float angle) {
         setMaxSpeed(speed);
-        setDistance(distance);
+        setAngle(angle);
         run();
     }
 
@@ -19,12 +19,15 @@ public class Forward extends AbstractUtil {
             leftMotor.setSpeed(maxSpeed);
             rightMotor.setSpeed(maxSpeed);
 
-            // モーター回転角を設定する
+            // 回したい角度からマシンの回転距離を求める
+            setDistance(getMachineCircumference() / angle);
+
+            // 回転距離からモーター回転角を設定する
             setAngle(distance / (getTireCircumference() / 360));
 
             // 移動開始
             leftMotor.startSynchronization();
-            leftMotor.rotateTo((int) angle);
+            leftMotor.rotateTo(-(int) angle);
             rightMotor.rotateTo((int) angle);
             leftMotor.endSynchronization();
 
