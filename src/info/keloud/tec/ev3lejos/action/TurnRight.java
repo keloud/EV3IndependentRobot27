@@ -16,24 +16,28 @@ public class TurnRight extends AbstractUtil {
     public void run() {
         try {
             // 初期化
+            leftMotor.resetTachoCount();
+            rightMotor.resetTachoCount();
+
+            //速度設定
             leftMotor.setSpeed(maxSpeed);
             rightMotor.setSpeed(maxSpeed);
 
             // 回したい角度からマシンの回転距離を求める
-            setDistance(getMachineCircumference() / angle);
+            setDistance(getMachineCircumference() / (360 / angle));
 
             // 回転距離からモーター回転角を設定する
             setAngle(distance / (getTireCircumference() / 360));
 
             // 移動開始
             leftMotor.startSynchronization();
-            leftMotor.rotateTo(-(int) angle);
-            rightMotor.rotateTo((int) angle);
+            leftMotor.rotate((int) angle);
+            rightMotor.rotate((int) -angle);
             leftMotor.endSynchronization();
 
             // モーターが止まるまで待つ
             while (leftMotor.isMoving() || rightMotor.isMoving()) {
-                sleep();
+                //空処理
             }
         } catch (Exception e) {
             Sound.buzz();

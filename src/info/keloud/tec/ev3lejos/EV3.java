@@ -1,6 +1,7 @@
 package info.keloud.tec.ev3lejos;
 
 import info.keloud.tec.ev3lejos.action.Forward;
+import info.keloud.tec.ev3lejos.action.TurnRight;
 import lejos.hardware.Button;
 
 import static info.keloud.tec.ev3lejos.Main.sensorUpdater;
@@ -15,9 +16,13 @@ class EV3 {
         Button.ENTER.waitForPress();
         sensorUpdater.setStopwatchFlag(true);
 
-        new Forward().run(500, 100);
+        Forward forward = new Forward();
+        TurnRight turnRight = new TurnRight();
 
-        //new TurnRight().run(500,90);
+        forward.run(500, 50);
+        turnRight.run(500, 180);
+        forward.run(500, 50);
+        turnRight.run(500, 180);
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();

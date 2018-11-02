@@ -1,7 +1,5 @@
 package info.keloud.tec.ev3lejos.action;
 
-import lejos.hardware.Sound;
-
 import static info.keloud.tec.ev3lejos.Main.leftMotor;
 import static info.keloud.tec.ev3lejos.Main.rightMotor;
 
@@ -100,7 +98,6 @@ public abstract class AbstractUtil implements ImplementUtil {
 
     // タイヤ駆動部を止める
     void stopLargeMotor() {
-        Sound.beepSequenceUp();
         // 停止
         leftMotor.startSynchronization();
         leftMotor.stop(true);

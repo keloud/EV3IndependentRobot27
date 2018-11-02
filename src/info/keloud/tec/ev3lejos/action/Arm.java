@@ -28,7 +28,7 @@ public class Arm extends AbstractUtil {
             centerMotor.setSpeed(maxSpeed);
 
             // モーター回転角を設定し、移動開始
-            centerMotor.rotateTo((int) angle);
+            centerMotor.rotate((int) angle);
 
             // モーターが止まるまで待つ
             while (centerMotor.isMoving()) {
@@ -49,7 +49,7 @@ public class Arm extends AbstractUtil {
             centerMotor.setSpeed(maxSpeed);
 
             // モーター回転角を設定する
-            centerMotor.rotateTo((int) angle);
+            centerMotor.rotate((int) angle);
 
             // モーターが止まるまで待つ
             while (centerMotor.isMoving()) {
