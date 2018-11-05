@@ -17,16 +17,16 @@ public class PIDController extends AbstractUtil {
             // 初期化
             int initTachoCount = leftMotor.getTachoCount();
             int tachoCount = 0;
-            float currentLeftSpeed = currentSpeed;
-            float currentRightSpeed = currentSpeed;
-            leftMotor.setSpeed(minSpeed);
-            rightMotor.setSpeed(minSpeed);
+            float currentLeftSpeed = getCurrentSpeed();
+            float currentRightSpeed = getCurrentSpeed();
+            leftMotor.setSpeed(getMinSpeed());
+            rightMotor.setSpeed(getMinSpeed());
 
             // 角度累計計算
-            float cum = distance2Cumulative(distance);
+            float cum = distance2Cumulative(getDistance());
 
             //速度から必要な距離を求める(可変距離)
-            float distanceVariable = maxSpeed * 0.24F;
+            float distanceVariable = getMaxSpeed() * 0.24F;
 
             // 移動開始
             leftMotor.startSynchronization();
@@ -38,19 +38,19 @@ public class PIDController extends AbstractUtil {
             while (tachoCount < cum) {
                 if (tachoCount > cum - distanceVariable) {
                     //減速部
-                    currentSpeed = ((maxSpeed - minSpeed) * (cum - tachoCount) / distanceVariable + minSpeed);
+                    setCurrentSpeed((getMaxSpeed() - getMinSpeed()) * (cum - tachoCount) / distanceVariable + getMinSpeed());
                 } else if (tachoCount < distanceVariable) {
                     //加速部
-                    currentSpeed = ((maxSpeed - minSpeed) * tachoCount / distanceVariable + minSpeed);
+                    setCurrentSpeed((getMaxSpeed() - getMinSpeed()) * tachoCount / distanceVariable + getMinSpeed());
                 } else {
                     //巡航部
-                    currentSpeed = maxSpeed;
+                    setCurrentSpeed(getMaxSpeed());
                 }
 
-                float colorValue = colorSensor.getRedValue();
+                float colorValue = colorSensor.getRedValue()[0];
                 float targetColorValue = 0.55F;
-                currentLeftSpeed = currentSpeed;
-                currentRightSpeed = currentSpeed;
+                currentLeftSpeed = getCurrentSpeed();
+                currentRightSpeed = getCurrentSpeed();
                 //白色を検知した時
                 if (targetColorValue < colorValue) {
                     currentLeftSpeed -= (colorValue - targetColorValue) * 360F;

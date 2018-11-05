@@ -1,23 +1,25 @@
 package info.keloud.tec.ev3lejos.action;
 
+import lejos.robotics.Color;
+
 import static info.keloud.tec.ev3lejos.Main.leftMotor;
 import static info.keloud.tec.ev3lejos.Main.rightMotor;
 
 public abstract class AbstractUtil implements ImplementUtil {
     // Max Speed
-    float maxSpeed = 500;
+    private float maxSpeed = 500;
     // Minimum Spped
-    float minSpeed = 100;
+    private float minSpeed = 100;
     // Current Speed
-    float currentSpeed = 500;
+    private float currentSpeed = 0;
     // Distance
-    float distance = 0;
+    private float distance = 0;
     // Angle
-    float angle = 0;
+    private float angle = 0;
     // Diameter of tire(cm)
     private float diameter = 5.6F;
     // Width of wheel(cm)
-    private float width = 8.85F;
+    private float width = 8.9F;
     // Color
     private int colorId = 0;
 
@@ -31,8 +33,18 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     @Override
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    @Override
     public void setDistance(float distance) {
         this.distance = distance;
+    }
+
+    @Override
+    public float getDistance() {
+        return distance;
     }
 
     @Override
@@ -41,37 +53,62 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     @Override
+    public float getAngle() {
+        return angle;
+    }
+
+    @Override
     public void setColorId(int colorId) {
         this.colorId = colorId;
     }
 
+    @Override
+    public int getColorId() {
+        return colorId;
+    }
+
     public void setColorId(String colorId) {
         switch (colorId) {
+            case "NONE":
+                setColorId(Color.NONE);
+                break;
             case "BLACK":
-                setColorId(7);
+                setColorId(Color.BLACK);
                 break;
             case "BLUE":
-                setColorId(6);
+                setColorId(Color.BLUE);
                 break;
             case "GREEN":
-                //
+                setColorId(Color.GREEN);
                 break;
             case "YELLOW":
-                //
+                setColorId(Color.YELLOW);
                 break;
             case "RED":
-                setColorId(0);
+                setColorId(Color.RED);
                 break;
             case "WHITE":
-                setColorId(6);
+                setColorId(Color.WHITE);
                 break;
             case "BROWN":
-                //
+                setColorId(Color.BROWN);
                 break;
             default:
-                //
+                setColorId(Color.NONE);
                 break;
         }
+    }
+
+    public float getCurrentSpeed() {
+        return currentSpeed;
+    }
+
+    public void setCurrentSpeed(float currentSpeed) {
+        this.currentSpeed = currentSpeed;
+    }
+
+    public float getMinSpeed() {
+        return minSpeed;
     }
 
     //centimeter単位で指定
@@ -100,8 +137,8 @@ public abstract class AbstractUtil implements ImplementUtil {
     void stopLargeMotor() {
         // 停止
         leftMotor.startSynchronization();
-        leftMotor.stop(true);
-        rightMotor.stop(true);
+        leftMotor.stop();
+        rightMotor.stop();
         leftMotor.endSynchronization();
     }
 
@@ -110,8 +147,5 @@ public abstract class AbstractUtil implements ImplementUtil {
         return (float) (width * Math.PI);
     }
 
-    // sleep処理
-    void sleep() throws InterruptedException {
-        Thread.sleep(1);
-    }
+
 }
