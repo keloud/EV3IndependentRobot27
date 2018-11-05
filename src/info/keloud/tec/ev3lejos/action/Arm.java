@@ -8,6 +8,11 @@ import static info.keloud.tec.ev3lejos.Main.centerMotor;
 public class Arm extends AbstractUtil {
     @Override
     public void run() {
+        //動作中ならば待つ
+        while (centerMotor.isMoving()) {
+            // 待機
+        }
+
         // スムーズ移動の設定
         centerMotor.setAcceleration(1200);
 

@@ -142,6 +142,20 @@ public abstract class AbstractUtil implements ImplementUtil {
         leftMotor.endSynchronization();
     }
 
+    void moveLargeMotor(boolean direction) {
+        if (direction) {
+            leftMotor.startSynchronization();
+            leftMotor.forward();
+            rightMotor.forward();
+            leftMotor.endSynchronization();
+        } else {
+            leftMotor.startSynchronization();
+            leftMotor.backward();
+            rightMotor.backward();
+            leftMotor.endSynchronization();
+        }
+    }
+
     // 車体の回転円周を返す
     float getMachineCircumference() {
         return (float) (width * Math.PI);

@@ -46,7 +46,7 @@ public class SensorUpdater extends Thread {
                 // 1分後にマシンを停止させる
                 if (stopwatch.elapsed() >= 60000 && stopwatchFlag) {
                     Sound.twoBeeps();
-                    //System.exit(0);
+                    System.exit(0);
                 }
                 Thread.sleep(5);
 

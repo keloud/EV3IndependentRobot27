@@ -1,9 +1,6 @@
 package info.keloud.tec.ev3lejos;
 
-import info.keloud.tec.ev3lejos.action.Arm;
-import info.keloud.tec.ev3lejos.action.Move;
-import info.keloud.tec.ev3lejos.action.MoveColor;
-import info.keloud.tec.ev3lejos.action.TurnRight;
+import info.keloud.tec.ev3lejos.action.*;
 import lejos.hardware.Button;
 
 import static info.keloud.tec.ev3lejos.Main.sensorUpdater;
@@ -22,14 +19,12 @@ class EV3 {
         MoveColor moveColor = new MoveColor();
         TurnRight turnRight = new TurnRight();
         Arm arm = new Arm();
+        PIDController pidController = new PIDController();
 
         arm.run();
-        move.run(800, 40);
         arm.run();
-        moveColor.run(800, true, "RED");
         arm.run();
-        moveColor.run(800, false, "YELLOW");
-
+        arm.run();
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();

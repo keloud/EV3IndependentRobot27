@@ -4,13 +4,13 @@ import lejos.hardware.Sound;
 
 import static info.keloud.tec.ev3lejos.Main.*;
 
-public class MoveColor extends AbstractUtil {
+public class MoveUltrasonic extends AbstractUtil {
     // 前(true)後(false)方向
     private boolean direction;
 
-    public void run(float speed, String color, boolean direction) {
+    public void run(float speed, float distance, boolean direction) {
         setMaxSpeed(speed);
-        setColorId(color);
+        setDistance(distance);
         this.direction = direction;
         run();
     }
@@ -29,9 +29,9 @@ public class MoveColor extends AbstractUtil {
             // 移動開始
             moveLargeMotor(direction);
 
-            // 指定の色を見つけるまで移動する
+            // 指定の距離まで移動する
             while (true) {
-                if (colorSensor.getColorID()[0] == getColorId()) {
+                if (ultrasonicSensor.getValue() > getDistance()) {
                     stopLargeMotor();
                     break;
                 }
