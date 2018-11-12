@@ -13,18 +13,18 @@ public class ColorSensor {
     }
 
     // NONE, BLACK, BLUE, GREEN, YELLOW, RED, WHITE, BROWN
-    public float[] getColorID() {
+    public float getColorID() {
         float[] colorValue = new float[color.getColorIDMode().sampleSize()];
         color.getColorIDMode().fetchSample(colorValue, 0);
         modeName = color.getName();
-        return colorValue;
+        return colorValue[0];
     }
 
-    public float[] getRedValue() {
+    public float getRedValue() {
         float[] colorValue = new float[color.getRedMode().sampleSize()];
         color.getRedMode().fetchSample(colorValue, 0);
         modeName = color.getName();
-        return colorValue;
+        return colorValue[0];
     }
 
     public float[] getRGBValue() {
@@ -36,6 +36,20 @@ public class ColorSensor {
 
     public String getModeName() {
         return modeName;
+    }
+
+    public int getColorId(float red, float green, float blue) {
+        float sum = red + green + blue;
+        float redRatio = red / sum;
+        float greenRatio = green / sum;
+        float blueRatio = blue / sum;
+
+        if (redRatio < 0.3 && greenRatio < 0.4 && blueRatio > 0.5) return Color.BLUE;
+        if (redRatio < 0.2 && greenRatio > 0.5 && blueRatio > 0.2) return Color.GREEN;
+        if (redRatio > 0.5 && greenRatio > 0.3 && blueRatio < 0.1) return Color.YELLOW;
+        if (redRatio > 0.7 && greenRatio < 0.2 && blueRatio < 0.2) return Color.RED;
+
+        return Color.NONE;
     }
 
     public String getColorName(int colorId) {

@@ -47,7 +47,7 @@ public class PIDController extends AbstractUtil {
                     setCurrentSpeed(getMaxSpeed());
                 }
 
-                float colorValue = colorSensor.getRedValue()[0];
+                float colorValue = colorSensor.getRedValue();
                 float targetColorValue = 0.55F;
                 currentLeftSpeed = getCurrentSpeed();
                 currentRightSpeed = getCurrentSpeed();

@@ -6,15 +6,17 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.centerMotor;
 
 public class Arm extends AbstractUtil {
+    private boolean move = false;
+
+    public void run(boolean move) {
+        this.move = move;
+        run();
+    }
+
     @Override
     public void run() {
-        //動作中ならば待つ
-        while (centerMotor.isMoving()) {
-            // 待機
-        }
-
         // スムーズ移動の設定
-        centerMotor.setAcceleration(1200);
+        centerMotor.setAcceleration(6000);
 
         // 速度設定
         setMaxSpeed(centerMotor.getMaxSpeed());
@@ -34,7 +36,7 @@ public class Arm extends AbstractUtil {
     private void open() {
         try {
             // モーター回転角を設定し、移動開始
-            centerMotor.rotate((int) getAngle(), true);
+            centerMotor.rotate((int) getAngle(), move);
         } catch (Exception e) {
             Sound.buzz();
         } finally {
@@ -47,7 +49,7 @@ public class Arm extends AbstractUtil {
     private void close() {
         try {
             // モーター回転角を設定する
-            centerMotor.rotate((int) getAngle(), true);
+            centerMotor.rotate((int) getAngle(), move);
         } catch (Exception e) {
             Sound.buzz();
         } finally {

@@ -31,6 +31,8 @@ public class Move extends AbstractUtil {
             leftMotor.rotate((int) getAngle());
             rightMotor.rotate((int) getAngle());
             leftMotor.endSynchronization();
+
+            while (leftMotor.isMoving() || rightMotor.isMoving()) ;
         } catch (Exception e) {
             Sound.buzz();
         } finally {

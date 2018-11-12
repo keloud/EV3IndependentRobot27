@@ -5,7 +5,7 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.leftMotor;
 import static info.keloud.tec.ev3lejos.Main.rightMotor;
 
-public class TurnRight extends AbstractUtil {
+public class Turn extends AbstractUtil {
     public void run(float speed, float angle) {
         setMaxSpeed(speed);
         setAngle(angle);
@@ -34,6 +34,8 @@ public class TurnRight extends AbstractUtil {
             leftMotor.rotate((int) getAngle());
             rightMotor.rotate((int) -getAngle());
             leftMotor.endSynchronization();
+
+            while (leftMotor.isMoving() || rightMotor.isMoving()) ;
         } catch (Exception e) {
             Sound.buzz();
         } finally {

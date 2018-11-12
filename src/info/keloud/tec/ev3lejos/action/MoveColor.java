@@ -31,7 +31,7 @@ public class MoveColor extends AbstractUtil {
 
             // 指定の色を見つけるまで移動する
             while (true) {
-                if (colorSensor.getColorID()[0] == getColorId()) {
+                if (colorSensor.getColorID() == getColorId()) {
                     stopLargeMotor();
                     break;
                 }
