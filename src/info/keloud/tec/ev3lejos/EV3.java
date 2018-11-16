@@ -26,20 +26,52 @@ class EV3 {
         Arm arm = new Arm();
         PIDController pidController = new PIDController();
 
+        // アームを空ける
         arm.run(true);
+        // 真ん中のペットボトルにつっこむ
         move.run(800, 48);
-        arm.run();
+        // ペットボトルをつかむ
+        arm.run(true);
+        // 置く場所の赤色まで進む
         moveColor.run(800, "RED", true);
-        arm.run();
+        // ペットボトルを放す
+        arm.run(true);
+        // マップ中央まで進む
         move.run(800, -120);
+        // 右のペットボトルに向く
         turn.run(800, 110);
-        move.run(800, 50);
-        arm.run();
-        turn.run(800, -150);
+        // ペットボトルまでつっこむ
+        move.run(800, 35);
+        // ペットボトルをつかむ
+        arm.run(false);
+        // 置く場所にゆっくり向く
+        turn.run(100, -130);
+        // 置く場所の赤色まで進む
         moveColor.run(800, "RED", true);
-        arm.run();
-        move.run(800, -20);
-
+        // ペットボトルを放して下がる
+        arm.run(false);
+        move.run(800, -15);
+        // マップ中央に向く
+        turn.run(800, 15);
+        // マップ中央まで進む
+        move.run(800, -105);
+        // 左のペットボトルに向く
+        turn.run(800, -110);
+        // ペットボトルまでつっこむ
+        move.run(800, 35);
+        // ペットボトルをつかむ
+        arm.run(false);
+        // 置く場所のまでゆっくり向く
+        turn.run(100, 130);
+        // 置く場所の赤色まで進む
+        moveColor.run(800, "RED", true);
+        // ペットボトルを放して下がる
+        arm.run(false);
+        move.run(800, -15);
+        // マップ中央に向く
+        turn.run(800, -15);
+        // 帰宅場所の黄色まで進む
+        moveColor.run(800, "YELLOW", false);
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
