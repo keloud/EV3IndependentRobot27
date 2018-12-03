@@ -58,8 +58,8 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -145);
         // 左のペットボトルに向く
-        new Turn().run(maxSpeed, -50);
-        //new Probe().run(-90);
+        //new Turn().run(maxSpeed, -50);
+        new Probe().run(-90);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
