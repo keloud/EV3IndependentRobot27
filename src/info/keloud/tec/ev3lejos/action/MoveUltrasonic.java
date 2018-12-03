@@ -5,18 +5,11 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.*;
 
 public class MoveUltrasonic extends AbstractUtil {
-    // 前(true)後(false)方向
-    private boolean direction;
 
     public void run(float speed, float distance, boolean direction) {
         setMaxSpeed(speed);
         setDistance(distance);
-        this.direction = direction;
-        run();
-    }
 
-    @Override
-    public void run() {
         try {
             // スムーズ移動の設定
             leftMotor.setAcceleration(1000);
@@ -39,7 +32,7 @@ public class MoveUltrasonic extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            //Sound.beepSequenceUp();
+            playStopSound();
         }
     }
 }

@@ -1,8 +1,6 @@
 package info.keloud.tec.ev3lejos.action;
 
 interface ImplementUtil {
-    void run();
-
     float getMaxSpeed();
 
     void setMaxSpeed(float speed);

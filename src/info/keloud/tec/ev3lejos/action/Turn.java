@@ -9,11 +9,7 @@ public class Turn extends AbstractUtil {
     public void run(float speed, float angle) {
         setMaxSpeed(speed);
         setAngle(angle);
-        run();
-    }
 
-    @Override
-    public void run() {
         try {
             // スムーズ移動の設定
             leftMotor.setAcceleration(1000);
@@ -39,7 +35,7 @@ public class Turn extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            //Sound.beepSequenceUp();
+            playStopSound();
         }
     }
 }

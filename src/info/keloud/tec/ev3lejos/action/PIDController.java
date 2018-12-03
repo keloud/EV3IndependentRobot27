@@ -8,11 +8,7 @@ public class PIDController extends AbstractUtil {
     public void run(float speed, float distance) {
         setMaxSpeed(speed);
         setDistance(distance);
-        run();
-    }
 
-    @Override
-    public void run() {
         try {
             // 初期化
             int initTachoCount = leftMotor.getTachoCount();
@@ -68,6 +64,7 @@ public class PIDController extends AbstractUtil {
             Sound.buzz();
         } finally {
             stopLargeMotor();
+            playStopSound();
         }
     }
 }

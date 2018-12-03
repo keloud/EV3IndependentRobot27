@@ -9,11 +9,7 @@ public class Move extends AbstractUtil {
     public void run(float speed, float distance) {
         setMaxSpeed(speed);
         setDistance(distance);
-        run();
-    }
 
-    @Override
-    public void run() {
         try {
             // スムーズ移動の設定
             leftMotor.setAcceleration(1000);
@@ -36,7 +32,7 @@ public class Move extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            //Sound.beepSequenceUp();
+            playStopSound();
         }
     }
 }

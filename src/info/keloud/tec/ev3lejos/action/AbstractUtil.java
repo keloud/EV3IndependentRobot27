@@ -24,10 +24,6 @@ public abstract class AbstractUtil implements ImplementUtil {
     private int colorId = 0;
 
     @Override
-    public void run() {
-    }
-
-    @Override
     public void setMaxSpeed(float speed) {
         this.maxSpeed = speed;
     }
@@ -67,7 +63,7 @@ public abstract class AbstractUtil implements ImplementUtil {
         return colorId;
     }
 
-    public void setColorId(String colorId) {
+    void setColorId(String colorId) {
         switch (colorId) {
             case "NONE":
                 setColorId(Color.NONE);
@@ -99,15 +95,15 @@ public abstract class AbstractUtil implements ImplementUtil {
         }
     }
 
-    public float getCurrentSpeed() {
+    float getCurrentSpeed() {
         return currentSpeed;
     }
 
-    public void setCurrentSpeed(float currentSpeed) {
+    void setCurrentSpeed(float currentSpeed) {
         this.currentSpeed = currentSpeed;
     }
 
-    public float getMinSpeed() {
+    float getMinSpeed() {
         return minSpeed;
     }
 
@@ -142,6 +138,17 @@ public abstract class AbstractUtil implements ImplementUtil {
         leftMotor.endSynchronization();
     }
 
+    // 車体の回転円周を返す
+    float getMachineCircumference() {
+        return (float) (width * Math.PI);
+    }
+
+    // 動作を止める時用音楽
+    void playStopSound() {
+        //Sound.beepSequenceUp();
+    }
+
+    // タイヤを動かす
     void moveLargeMotor(boolean direction) {
         if (direction) {
             leftMotor.startSynchronization();
@@ -155,11 +162,4 @@ public abstract class AbstractUtil implements ImplementUtil {
             leftMotor.endSynchronization();
         }
     }
-
-    // 車体の回転円周を返す
-    float getMachineCircumference() {
-        return (float) (width * Math.PI);
-    }
-
-
 }

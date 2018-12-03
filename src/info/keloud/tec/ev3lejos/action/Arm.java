@@ -6,7 +6,6 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.centerMotor;
 
 public class Arm extends AbstractUtil {
-    @Override
     public void run() {
         // スムーズ移動の設定
         centerMotor.setAcceleration(8000);
