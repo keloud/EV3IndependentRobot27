@@ -40,7 +40,7 @@ public class Arm extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            Sound.beepSequenceUp();
+            //Sound.beepSequenceUp();
             // アームが開いたことにする
             Main.isArmOpen = true;
         }
@@ -53,7 +53,7 @@ public class Arm extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            Sound.beepSequenceUp();
+            //Sound.beepSequenceUp();
             // アームが閉じたことにする
             Main.isArmOpen = false;
         }

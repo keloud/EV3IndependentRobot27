@@ -120,7 +120,7 @@ class EV3 {
         new Arm().run(false);
         new Move().run(maxSpeed, -15);
         // マップ中央に向く
-        new Turn().run(maxSpeed, 10);
+        new Turn().run(maxSpeed, 15);
         // マップ中央まで進む
         new Move().run(maxSpeed, -160);
         // 左のペットボトルに向く

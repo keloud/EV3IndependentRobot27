@@ -36,7 +36,7 @@ public class Move extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            Sound.beepSequenceUp();
+            //Sound.beepSequenceUp();
         }
     }
 }

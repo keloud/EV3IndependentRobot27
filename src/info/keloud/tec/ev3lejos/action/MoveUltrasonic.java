@@ -39,7 +39,7 @@ public class MoveUltrasonic extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            Sound.beepSequenceUp();
+            //Sound.beepSequenceUp();
         }
     }
 }
