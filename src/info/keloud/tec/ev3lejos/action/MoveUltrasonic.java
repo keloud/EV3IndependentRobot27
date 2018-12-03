@@ -5,6 +5,9 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.*;
 
 public class MoveUltrasonic extends AbstractUtil {
+    public void run(float speed, float distance) {
+        run(speed, distance, true);
+    }
 
     public void run(float speed, float distance, boolean direction) {
         setMaxSpeed(speed);

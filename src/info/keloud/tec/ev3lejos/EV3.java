@@ -1,22 +1,21 @@
 package info.keloud.tec.ev3lejos;
 
-import info.keloud.tec.ev3lejos.action.Arm;
-import info.keloud.tec.ev3lejos.action.Move;
-import info.keloud.tec.ev3lejos.action.MoveColor;
-import info.keloud.tec.ev3lejos.action.Turn;
+import info.keloud.tec.ev3lejos.action.*;
 import lejos.hardware.Button;
 
 import static info.keloud.tec.ev3lejos.Main.*;
 
 class EV3 {
-    EV3() {
-
-    }
-
     void run() {
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
         sensorUpdater.setStopwatchFlag(true);
+
+        // センサ情報の初期化
+        leftMotor.resetTachoCount();
+        rightMotor.resetTachoCount();
+        centerMotor.resetTachoCount();
+        gyroSensor.initGyro();
 
         yosen();
 
@@ -26,11 +25,6 @@ class EV3 {
     }
 
     private void yosen() {
-        leftMotor.resetTachoCount();
-        rightMotor.resetTachoCount();
-        centerMotor.resetTachoCount();
-        gyroSensor.initGyro();
-
         float maxSpeed = 800;
 
         // アームを空ける
@@ -46,7 +40,8 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -160);
         // 右のペットボトルに向く
-        new Turn().run(maxSpeed, 50);
+        //new Turn().run(maxSpeed, 50);
+        new Probe().run(90);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
@@ -64,6 +59,7 @@ class EV3 {
         new Move().run(maxSpeed, -145);
         // 左のペットボトルに向く
         new Turn().run(maxSpeed, -50);
+        //new Probe().run(-90);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
@@ -76,8 +72,14 @@ class EV3 {
         new Arm().run();
         new Move().run(maxSpeed, -15);
         // マップ中央に向く
-        new Turn().run(maxSpeed, -10);
+        new Turn().run(maxSpeed, -15);
         // 帰宅場所の黄色まで進む
         new MoveColor().run(maxSpeed, "YELLOW", false);
+    }
+
+    private void tansa() {
+        float maxSpeed = 800;
+
+        new Probe().run(90);
     }
 }
