@@ -46,7 +46,6 @@ public class SensorUpdater extends Thread {
                     System.exit(0);
                 }
                 Thread.sleep(5);
-
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

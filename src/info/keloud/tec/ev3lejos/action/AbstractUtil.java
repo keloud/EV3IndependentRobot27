@@ -8,8 +8,6 @@ import static info.keloud.tec.ev3lejos.Main.rightMotor;
 public abstract class AbstractUtil implements ImplementUtil {
     // Max Speed
     private float maxSpeed = 500;
-    // Minimum Spped
-    private float minSpeed = 100;
     // Current Speed
     private float currentSpeed = 0;
     // Distance
@@ -101,10 +99,6 @@ public abstract class AbstractUtil implements ImplementUtil {
 
     void setCurrentSpeed(float currentSpeed) {
         this.currentSpeed = currentSpeed;
-    }
-
-    float getMinSpeed() {
-        return minSpeed;
     }
 
     //centimeter単位で指定

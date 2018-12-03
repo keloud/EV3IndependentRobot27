@@ -67,4 +67,8 @@ public class PIDController extends AbstractUtil {
             playStopSound();
         }
     }
+
+    float getMinSpeed() {
+        return 100;
+    }
 }
