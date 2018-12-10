@@ -3,7 +3,8 @@ package info.keloud.tec.ev3lejos;
 import info.keloud.tec.ev3lejos.action.*;
 import lejos.hardware.Button;
 
-import static info.keloud.tec.ev3lejos.Main.*;
+import static info.keloud.tec.ev3lejos.Main.gyroSensor;
+import static info.keloud.tec.ev3lejos.Main.sensorUpdater;
 
 class EV3 {
     void run() {
@@ -12,9 +13,6 @@ class EV3 {
         sensorUpdater.setStopwatchFlag(true);
 
         // センサ情報の初期化
-        leftMotor.resetTachoCount();
-        rightMotor.resetTachoCount();
-        centerMotor.resetTachoCount();
         gyroSensor.initGyro();
 
         yosen();
@@ -40,14 +38,14 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -160);
         // 右のペットボトルに向く
-        //new Turn().run(maxSpeed, -50);
-        new Probe().run(-90);
+        new Probe().run(-75);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
+        Button.ENTER.waitForPress();
         // ペットボトルをつかむ
         new Arm().run();
         // 置く場所にゆっくり向く
-        new Turn().run(100, gyroSensor.getValue() + 95);
+        new Turn().run(100, 65);
         // 置く場所の赤色まで進む
         new MoveColor().run(maxSpeed, "RED", true);
         // ペットボトルを放して下がる

@@ -20,7 +20,7 @@ public class Move extends AbstractUtil {
             rightMotor.setSpeed(getMaxSpeed());
 
             // モーター回転角を設定する
-            setMotorAngle(getDistance() / (getTireCircumference() / 360));
+            setMotorAngle(getDistance());
 
             // 移動開始
             leftMotor.startSynchronization();

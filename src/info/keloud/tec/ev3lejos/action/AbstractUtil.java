@@ -59,10 +59,10 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     @Override
-    public void setMotorAngle(float motorAngle) {
-        this.motorAngle = motorAngle;
+    public void setMotorAngle(float distance) {
+        setDistance(distance);
+        this.motorAngle = getDistance() / (getTireCircumference() / 360);
     }
-
 
     @Override
     public void setColorId(int colorId) {
@@ -74,6 +74,8 @@ public abstract class AbstractUtil implements ImplementUtil {
         return colorId;
     }
 
+    // 文字列からカラーIDを保管する
+    // 一致しない場合はNONEを保管する
     void setColorId(String colorId) {
         switch (colorId) {
             case "NONE":
@@ -106,29 +108,32 @@ public abstract class AbstractUtil implements ImplementUtil {
         }
     }
 
+    // 現在の速度を返す
     float getCurrentSpeed() {
         return currentSpeed;
     }
 
+    // 現在の速度を保管する
     void setCurrentSpeed(float currentSpeed) {
         this.currentSpeed = currentSpeed;
     }
 
     //centimeter単位で指定
-    //タコカウント用に変換する
+    // 距離をタコカウントに変換する
     float distance2Cumulative(float distance) {
-        //指定した距離に必要なタコカウント
-        return (distance / diameter / (float) Math.PI) * 360;
+        setDistance(distance);
+        return (getDistance() / diameter / (float) Math.PI) * 360;
     }
 
-    //角度から距離に変換する
+    // 角度からマシン回転距離に変換する
     float angle2Distance(float angle) {
-        return (angle * width * (float) Math.PI) / 360;
+        setAngle(angle);
+        return getMachineCircumference() / (360 / getAngle());
     }
 
-    //角度からタコカウント用に変換する
-    float angle2Cumulative(float angle) {
-        return distance2Cumulative(angle2Distance(angle));
+    // タコカウントから距離を求める
+    float cumulative2Distance(float cumulative) {
+        return (cumulative * diameter * (float) Math.PI) / 360;
     }
 
     // タイヤの円周を返す
