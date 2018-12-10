@@ -47,14 +47,14 @@ class EV3 {
         // ペットボトルをつかむ
         new Arm().run();
         // 置く場所にゆっくり向く
-        new Turn().run(100, gyroSensor.getValue() + 100);
+        new Turn().run(100, gyroSensor.getValue() + 95);
         // 置く場所の赤色まで進む
         new MoveColor().run(maxSpeed, "RED", true);
         // ペットボトルを放して下がる
         new Arm().run();
         new Move().run(maxSpeed, -15);
         // マップ中央に向く
-        new Turn().run(maxSpeed, gyroSensor.getValue());
+        new Turn().run(maxSpeed, -gyroSensor.getValue());
         // マップ中央まで進む
         new Move().run(maxSpeed, -145);
         // 左のペットボトルに向く

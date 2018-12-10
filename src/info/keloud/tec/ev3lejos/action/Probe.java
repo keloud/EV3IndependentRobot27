@@ -44,21 +44,9 @@ public class Probe extends AbstractUtil {
             }
 
             // 一番近いスポットへの角度を設定する
-            setAngle(-(shortRangeAngle + proveRangeAngle));
+            setAngle(-(proveRangeAngle - shortRangeAngle));
 
-            // 回したい角度からマシンの回転距離を求める
-            setDistance(getMachineCircumference() / (360 / getAngle()));
-
-            // 回転距離からモーター回転角を設定する
-            setAngle(getDistance() / (getTireCircumference() / 360));
-
-            // 移動開始
-            leftMotor.startSynchronization();
-            leftMotor.rotate((int) getAngle(), false);
-            rightMotor.rotate((int) -getAngle(), false);
-            leftMotor.endSynchronization();
-
-            while (leftMotor.isMoving() || rightMotor.isMoving()) ;
+            new Turn().run(100, getAngle());
         } catch (Exception e) {
             Sound.buzz();
         } finally {
