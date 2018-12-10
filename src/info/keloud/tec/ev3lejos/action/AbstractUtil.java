@@ -116,7 +116,7 @@ public abstract class AbstractUtil implements ImplementUtil {
         this.currentSpeed = currentSpeed;
     }
 
-    //centimeter単位で指定
+    // centimeter単位で指定
     // 距離をタコカウントに変換する
     float distance2Cumulative(float distance) {
         setDistance(distance);

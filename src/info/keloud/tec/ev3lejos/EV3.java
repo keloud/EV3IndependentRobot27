@@ -15,7 +15,7 @@ class EV3 {
         // センサ情報の初期化
         gyroSensor.initGyro();
 
-        yosen();
+        new Probe().run(-90);
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
