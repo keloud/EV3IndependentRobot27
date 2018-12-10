@@ -14,6 +14,8 @@ public abstract class AbstractUtil implements ImplementUtil {
     private float distance = 0;
     // Angle
     private float angle = 0;
+    // MotorAngle
+    private float motorAngle = 0;
     // Diameter of tire(cm)
     private float diameter = 5.6F;
     // Width of wheel(cm)
@@ -50,6 +52,17 @@ public abstract class AbstractUtil implements ImplementUtil {
     public float getAngle() {
         return angle;
     }
+
+    @Override
+    public float getMotorAngle() {
+        return motorAngle;
+    }
+
+    @Override
+    public void setMotorAngle(float motorAngle) {
+        this.motorAngle = motorAngle;
+    }
+
 
     @Override
     public void setColorId(int colorId) {

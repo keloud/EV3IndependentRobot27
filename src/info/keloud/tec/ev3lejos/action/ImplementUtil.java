@@ -13,6 +13,10 @@ interface ImplementUtil {
 
     void setAngle(float angle);
 
+    float getMotorAngle();
+
+    void setMotorAngle(float motorAngle);
+
     int getColorId();
 
     void setColorId(int colorId);

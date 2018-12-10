@@ -68,7 +68,7 @@ public class PIDController extends AbstractUtil {
         }
     }
 
-    float getMinSpeed() {
+    private float getMinSpeed() {
         return 100;
     }
 }
