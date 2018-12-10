@@ -26,8 +26,8 @@ public class Probe extends AbstractUtil {
 
             // 移動開始
             leftMotor.startSynchronization();
-            leftMotor.rotate((int) getAngle(), true);
-            rightMotor.rotate((int) -getAngle(), true);
+            leftMotor.rotate((int) -getAngle(), true);
+            rightMotor.rotate((int) getAngle(), true);
             leftMotor.endSynchronization();
 
             // 探査
@@ -54,8 +54,8 @@ public class Probe extends AbstractUtil {
 
             // 移動開始
             leftMotor.startSynchronization();
-            leftMotor.rotate((int) getAngle(), false);
-            rightMotor.rotate((int) -getAngle(), false);
+            leftMotor.rotate((int) -getAngle(), false);
+            rightMotor.rotate((int) getAngle(), false);
             leftMotor.endSynchronization();
 
             while (leftMotor.isMoving() || rightMotor.isMoving()) ;

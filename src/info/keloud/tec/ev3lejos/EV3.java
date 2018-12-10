@@ -40,13 +40,31 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -160);
         // 右のペットボトルに向く
+        //new Turn().run(maxSpeed, -50);
+        new Probe().run(-90);
+        // ペットボトルまでつっこむ
+        new Move().run(maxSpeed, 50);
+        // ペットボトルをつかむ
+        new Arm().run();
+        // 置く場所にゆっくり向く
+        new Turn().run(100, gyroSensor.getValue() + 60);
+        // 置く場所の赤色まで進む
+        new MoveColor().run(maxSpeed, "RED", true);
+        // ペットボトルを放して下がる
+        new Arm().run();
+        new Move().run(maxSpeed, -15);
+        // マップ中央に向く
+        new Turn().run(maxSpeed, gyroSensor.getValue());
+        // マップ中央まで進む
+        new Move().run(maxSpeed, -145);
+        // 左のペットボトルに向く
         //new Turn().run(maxSpeed, 50);
         new Probe().run(90);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
         new Arm().run();
-        // 置く場所にゆっくり向く
+        // 置く場所のまでゆっくり向く
         new Turn().run(100, -65);
         // 置く場所の赤色まで進む
         new MoveColor().run(maxSpeed, "RED", true);
@@ -55,24 +73,6 @@ class EV3 {
         new Move().run(maxSpeed, -15);
         // マップ中央に向く
         new Turn().run(maxSpeed, 15);
-        // マップ中央まで進む
-        new Move().run(maxSpeed, -145);
-        // 左のペットボトルに向く
-        //new Turn().run(maxSpeed, -50);
-        new Probe().run(-90);
-        // ペットボトルまでつっこむ
-        new Move().run(maxSpeed, 50);
-        // ペットボトルをつかむ
-        new Arm().run();
-        // 置く場所のまでゆっくり向く
-        new Turn().run(100, 65);
-        // 置く場所の赤色まで進む
-        new MoveColor().run(maxSpeed, "RED", true);
-        // ペットボトルを放して下がる
-        new Arm().run();
-        new Move().run(maxSpeed, -15);
-        // マップ中央に向く
-        new Turn().run(maxSpeed, -15);
         // 帰宅場所の黄色まで進む
         new MoveColor().run(maxSpeed, "YELLOW", false);
     }

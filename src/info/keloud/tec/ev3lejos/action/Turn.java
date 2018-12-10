@@ -27,8 +27,8 @@ public class Turn extends AbstractUtil {
 
             // 移動開始
             leftMotor.startSynchronization();
-            leftMotor.rotate((int) getAngle());
-            rightMotor.rotate((int) -getAngle());
+            leftMotor.rotate((int) -getAngle());
+            rightMotor.rotate((int) getAngle());
             leftMotor.endSynchronization();
 
             while (leftMotor.isMoving() || rightMotor.isMoving()) ;
