@@ -18,8 +18,6 @@ public abstract class AbstractUtil implements ImplementUtil {
     private float motorAngle = 0;
     // Diameter of tire(cm)
     private float diameter = 5.6F;
-    // Width of wheel(cm)
-    private float width = 8.9F;
     // Color
     private int colorId = 0;
 
@@ -137,7 +135,7 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     // タイヤの円周を返す
-    float getTireCircumference() {
+    private float getTireCircumference() {
         return (float) (diameter * Math.PI);
     }
 
@@ -151,7 +149,9 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     // 車体の回転円周を返す
-    float getMachineCircumference() {
+    private float getMachineCircumference() {
+        // Width of wheel(cm)
+        float width = 8.9F;
         return (float) (width * Math.PI);
     }
 
