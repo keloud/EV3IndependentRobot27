@@ -62,8 +62,6 @@ public class Probe extends AbstractUtil {
             new Turn().run(100, -getMotorAngle());
         } catch (Exception e) {
             Sound.buzz();
-        } finally {
-            playStopSound();
         }
     }
 }

@@ -4,11 +4,8 @@ import lejos.hardware.Sound;
 
 import static info.keloud.tec.ev3lejos.Main.*;
 
+// 指定した距離まで前進する
 public class MoveUltrasonic extends AbstractUtil {
-    public void run(float speed, float distance) {
-        run(speed, distance, true);
-    }
-
     public void run(float speed, float distance, boolean direction) {
         setMaxSpeed(speed);
         setDistance(distance);
@@ -23,19 +20,35 @@ public class MoveUltrasonic extends AbstractUtil {
             rightMotor.setSpeed(getMaxSpeed());
 
             // 移動開始
-            moveLargeMotor(direction);
+            if (direction) {
+                leftMotor.startSynchronization();
+                leftMotor.forward();
+                rightMotor.forward();
+                leftMotor.endSynchronization();
+            } else {
+                leftMotor.startSynchronization();
+                leftMotor.backward();
+                rightMotor.backward();
+                leftMotor.endSynchronization();
+            }
 
             // 指定の距離まで移動する
             while (true) {
                 if (ultrasonicSensor.getValue() > getDistance()) {
-                    stopLargeMotor();
+                    leftMotor.startSynchronization();
+                    leftMotor.stop();
+                    rightMotor.stop();
+                    leftMotor.endSynchronization();
                     break;
                 }
             }
         } catch (Exception e) {
             Sound.buzz();
-        } finally {
-            playStopSound();
         }
+    }
+
+    // 前進用短縮メソッド
+    public void run(float speed, float distance) {
+        run(speed, distance, true);
     }
 }

@@ -5,6 +5,7 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.*;
 
 public class PIDController extends AbstractUtil {
+
     public void run(float speed, float distance) {
         setMaxSpeed(speed);
         setDistance(distance);
@@ -13,8 +14,8 @@ public class PIDController extends AbstractUtil {
             // 初期化
             int initTachoCount = leftMotor.getTachoCount();
             int tachoCount = 0;
-            float currentLeftSpeed = getCurrentSpeed();
-            float currentRightSpeed = getCurrentSpeed();
+            float currentLeftSpeed;
+            float currentRightSpeed;
             leftMotor.setSpeed(getMinSpeed());
             rightMotor.setSpeed(getMinSpeed());
 
@@ -32,21 +33,23 @@ public class PIDController extends AbstractUtil {
 
             //移動処理
             while (tachoCount < cum) {
+                // Current Speed
+                float currentSpeed;
                 if (tachoCount > cum - distanceVariable) {
                     //減速部
-                    setCurrentSpeed((getMaxSpeed() - getMinSpeed()) * (cum - tachoCount) / distanceVariable + getMinSpeed());
+                    currentSpeed = (getMaxSpeed() - getMinSpeed()) * (cum - tachoCount) / distanceVariable + getMinSpeed();
                 } else if (tachoCount < distanceVariable) {
                     //加速部
-                    setCurrentSpeed((getMaxSpeed() - getMinSpeed()) * tachoCount / distanceVariable + getMinSpeed());
+                    currentSpeed = (getMaxSpeed() - getMinSpeed()) * tachoCount / distanceVariable + getMinSpeed();
                 } else {
                     //巡航部
-                    setCurrentSpeed(getMaxSpeed());
+                    currentSpeed = getMaxSpeed();
                 }
 
                 float colorValue = colorSensor.getRedValue();
                 float targetColorValue = 0.55F;
-                currentLeftSpeed = getCurrentSpeed();
-                currentRightSpeed = getCurrentSpeed();
+                currentLeftSpeed = currentSpeed;
+                currentRightSpeed = currentSpeed;
                 //白色を検知した時
                 if (targetColorValue < colorValue) {
                     currentLeftSpeed -= (colorValue - targetColorValue) * 360F;
@@ -63,11 +66,14 @@ public class PIDController extends AbstractUtil {
         } catch (Exception e) {
             Sound.buzz();
         } finally {
-            stopLargeMotor();
-            playStopSound();
+            leftMotor.startSynchronization();
+            leftMotor.stop();
+            rightMotor.stop();
+            leftMotor.endSynchronization();
         }
     }
 
+    // 最低の速度を返す
     private float getMinSpeed() {
         return 100;
     }

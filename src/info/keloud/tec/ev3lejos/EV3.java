@@ -15,7 +15,16 @@ class EV3 {
         // センサ情報の初期化
         gyroSensor.initGyro();
 
-        new Probe().run(-90);
+        // 予選プログラム
+        //yosen();
+
+        // 本選プログラム
+
+        // 探索テスト
+        new Probe().run(90);
+
+        // ライントレーサー
+        //new PIDController().run(800, 100);
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
@@ -38,10 +47,10 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -160);
         // 右のペットボトルに向く
-        new Probe().run(-75);
+        //new Probe().run(-75);
+        new Turn().run(maxSpeed, -50);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
-        Button.ENTER.waitForPress();
         // ペットボトルをつかむ
         new Arm().run();
         // 置く場所にゆっくり向く
@@ -56,8 +65,8 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -145);
         // 左のペットボトルに向く
-        //new Turn().run(maxSpeed, 50);
-        new Probe().run(90);
+        new Turn().run(maxSpeed, -50);
+        //new Probe().run(90);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
@@ -73,11 +82,5 @@ class EV3 {
         new Turn().run(maxSpeed, 15);
         // 帰宅場所の黄色まで進む
         new MoveColor().run(maxSpeed, "YELLOW", false);
-    }
-
-    private void tansa() {
-        float maxSpeed = 800;
-
-        new Probe().run(90);
     }
 }

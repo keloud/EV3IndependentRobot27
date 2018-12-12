@@ -2,29 +2,19 @@ package info.keloud.tec.ev3lejos.action;
 
 import lejos.robotics.Color;
 
-import static info.keloud.tec.ev3lejos.Main.leftMotor;
-import static info.keloud.tec.ev3lejos.Main.rightMotor;
-
 public abstract class AbstractUtil implements ImplementUtil {
-    // Max Speed
+    // 最大速度
     private float maxSpeed = 500;
-    // Current Speed
-    private float currentSpeed = 0;
-    // Distance
+    // 距離(cm)
     private float distance = 0;
-    // Angle
+    // 角度
     private float angle = 0;
-    // MotorAngle
+    // モーター回転角
     private float motorAngle = 0;
-    // Diameter of tire(cm)
+    // タイヤの直径(cm)
     private float diameter = 5.6F;
-    // Color
+    // カラーID
     private int colorId = 0;
-
-    @Override
-    public void setMaxSpeed(float speed) {
-        this.maxSpeed = speed;
-    }
 
     @Override
     public float getMaxSpeed() {
@@ -32,8 +22,8 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     @Override
-    public void setDistance(float distance) {
-        this.distance = distance;
+    public void setMaxSpeed(float speed) {
+        this.maxSpeed = speed;
     }
 
     @Override
@@ -42,8 +32,8 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     @Override
-    public void setAngle(float angle) {
-        this.angle = angle;
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
     @Override
@@ -52,10 +42,16 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     @Override
+    public void setAngle(float angle) {
+        this.angle = angle;
+    }
+
+    @Override
     public float getMotorAngle() {
         return motorAngle;
     }
 
+    // 距離(cm)をモーター回転角に変換して保管する
     @Override
     public void setMotorAngle(float distance) {
         setDistance(distance);
@@ -63,13 +59,13 @@ public abstract class AbstractUtil implements ImplementUtil {
     }
 
     @Override
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
+    public int getColorId() {
+        return colorId;
     }
 
     @Override
-    public int getColorId() {
-        return colorId;
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
     }
 
     // 文字列からカラーIDを保管する
@@ -106,72 +102,32 @@ public abstract class AbstractUtil implements ImplementUtil {
         }
     }
 
-    // 現在の速度を返す
-    float getCurrentSpeed() {
-        return currentSpeed;
-    }
-
-    // 現在の速度を保管する
-    void setCurrentSpeed(float currentSpeed) {
-        this.currentSpeed = currentSpeed;
-    }
-
-    // centimeter単位で指定
-    // 距離をタコカウントに変換する
-    float distance2Cumulative(float distance) {
-        setDistance(distance);
-        return (getDistance() / diameter / (float) Math.PI) * 360;
-    }
-
-    // 角度からマシン回転距離に変換する
-    float angle2Distance(float angle) {
-        setAngle(angle);
-        return getMachineCircumference() / (360 / getAngle());
-    }
-
-    // タコカウントから距離を求める
-    float cumulative2Distance(float cumulative) {
-        return (cumulative * diameter * (float) Math.PI) / 360;
-    }
-
     // タイヤの円周を返す
     private float getTireCircumference() {
         return (float) (diameter * Math.PI);
     }
 
-    // タイヤ駆動部を止める
-    void stopLargeMotor() {
-        // 停止
-        leftMotor.startSynchronization();
-        leftMotor.stop();
-        rightMotor.stop();
-        leftMotor.endSynchronization();
-    }
-
     // 車体の回転円周を返す
     private float getMachineCircumference() {
-        // Width of wheel(cm)
+        // 車体の幅(cm)
         float width = 8.9F;
         return (float) (width * Math.PI);
     }
 
-    // 動作を止める時用音楽
-    void playStopSound() {
-        //Sound.beepSequenceUp();
+    // 角度からマシン回転距離(cm)に変換する
+    float angle2Distance(float angle) {
+        setAngle(angle);
+        return getMachineCircumference() / (360 / getAngle());
     }
 
-    // タイヤを動かす
-    void moveLargeMotor(boolean direction) {
-        if (direction) {
-            leftMotor.startSynchronization();
-            leftMotor.forward();
-            rightMotor.forward();
-            leftMotor.endSynchronization();
-        } else {
-            leftMotor.startSynchronization();
-            leftMotor.backward();
-            rightMotor.backward();
-            leftMotor.endSynchronization();
-        }
+    // 距離(cm)をタコカウントに変換する
+    float distance2Cumulative(float distance) {
+        setDistance(distance);
+        return (getDistance() / diameter / (float) Math.PI) * 360;
+    }
+
+    // タコカウントから距離(cm)に変換する
+    float cumulative2Distance(float cumulative) {
+        return (cumulative * diameter * (float) Math.PI) / 360;
     }
 }

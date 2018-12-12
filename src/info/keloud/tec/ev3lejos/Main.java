@@ -20,7 +20,7 @@ public class Main {
     public static EV3MediumRegulatedMotor centerMotor;
     public static EV3LargeRegulatedMotor leftMotor;
     public static EV3LargeRegulatedMotor rightMotor;
-    public static SensorUpdater sensorUpdater;
+    static SensorUpdater sensorUpdater;
 
     //trueならば開いている
     public static boolean isArmOpen = false;
