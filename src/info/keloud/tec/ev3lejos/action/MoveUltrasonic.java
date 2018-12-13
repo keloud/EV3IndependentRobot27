@@ -6,9 +6,7 @@ import static info.keloud.tec.ev3lejos.Main.*;
 
 // 指定した距離まで前進する
 public class MoveUltrasonic extends AbstractUtil {
-    public void run(float speed, float distance, boolean direction) {
-        setMaxSpeed(speed);
-        setDistance(distance);
+    public void run(float maxSpeed, float distance, boolean direction) {
 
         try {
             // スムーズ移動の設定
@@ -16,8 +14,8 @@ public class MoveUltrasonic extends AbstractUtil {
             rightMotor.setAcceleration(1000);
 
             //速度設定
-            leftMotor.setSpeed(getMaxSpeed());
-            rightMotor.setSpeed(getMaxSpeed());
+            leftMotor.setSpeed(maxSpeed);
+            rightMotor.setSpeed(maxSpeed);
 
             // 移動開始
             if (direction) {
@@ -34,7 +32,7 @@ public class MoveUltrasonic extends AbstractUtil {
 
             // 指定の距離まで移動する
             while (true) {
-                if (ultrasonicSensor.getValue() > getDistance()) {
+                if (ultrasonicSensor.getValue() > distance) {
                     leftMotor.startSynchronization();
                     leftMotor.stop();
                     rightMotor.stop();
@@ -48,7 +46,7 @@ public class MoveUltrasonic extends AbstractUtil {
     }
 
     // 前進用短縮メソッド
-    public void run(float speed, float distance) {
-        run(speed, distance, true);
+    public void run(float maxSpeed, float distance) {
+        run(maxSpeed, distance, true);
     }
 }

@@ -8,12 +8,11 @@ import static info.keloud.tec.ev3lejos.Main.*;
 
 public class Probe extends AbstractUtil {
     public void run(int proveRangeAngle) {
-        setMaxSpeed(100);
-        setAngle(proveRangeAngle);
+        int maxSpeed = 100;
 
         // 利用するモーターを選択
         EV3LargeRegulatedMotor motor;
-        if (0 < getAngle()) {
+        if (0 < proveRangeAngle) {
             motor = rightMotor;
         } else {
             motor = leftMotor;
@@ -25,23 +24,17 @@ public class Probe extends AbstractUtil {
             rightMotor.setAcceleration(1000);
 
             //速度設定
-            leftMotor.setSpeed(getMaxSpeed());
-            rightMotor.setSpeed(getMaxSpeed());
-
-            // 回したい角度からマシンの回転距離を求める
-            setDistance(angle2Distance(getAngle()));
-
-            // 回転距離からモーター回転角を設定する
-            setMotorAngle(getDistance());
+            leftMotor.setSpeed(maxSpeed);
+            rightMotor.setSpeed(maxSpeed);
 
             // 移動開始
             leftMotor.startSynchronization();
-            leftMotor.rotate((int) -getMotorAngle(), true);
-            rightMotor.rotate((int) getMotorAngle(), true);
+            leftMotor.rotate((int) -getMotorAngle(angle2Distance(proveRangeAngle)), true);
+            rightMotor.rotate((int) getMotorAngle(angle2Distance(proveRangeAngle)), true);
             leftMotor.endSynchronization();
 
             // 探査
-            float proveRangeTachoCount = distance2Cumulative(angle2Distance(getAngle()));
+            float proveRangeTachoCount = distance2Cumulative(angle2Distance(proveRangeAngle));
             float shortRange = ultrasonicSensor.getValue();
             float currentRange;
             float initTachoCount = motor.getTachoCount();
@@ -56,10 +49,8 @@ public class Probe extends AbstractUtil {
 
             Button.ENTER.waitForPress();
 
-            // 一番近いスポットへの角度を設定する
-            setMotorAngle(cumulative2Distance(proveRangeTachoCount - shortRangeTachoCount));
-
-            new Turn().run(100, -getMotorAngle());
+            // 一番近いスポットへの角度を設定し、移動する
+            new Turn().run(100, -getMotorAngle(cumulative2Distance(proveRangeTachoCount - shortRangeTachoCount)));
         } catch (Exception e) {
             Sound.buzz();
         }

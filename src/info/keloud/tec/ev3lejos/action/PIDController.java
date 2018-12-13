@@ -6,9 +6,7 @@ import static info.keloud.tec.ev3lejos.Main.*;
 
 public class PIDController extends AbstractUtil {
 
-    public void run(float speed, float distance) {
-        setMaxSpeed(speed);
-        setDistance(distance);
+    public void run(float maxSpeed, float distance) {
 
         try {
             // 初期化
@@ -20,10 +18,10 @@ public class PIDController extends AbstractUtil {
             rightMotor.setSpeed(getMinSpeed());
 
             // 角度累計計算
-            float cum = distance2Cumulative(getDistance());
+            float cum = distance2Cumulative(distance);
 
             //速度から必要な距離を求める(可変距離)
-            float distanceVariable = getMaxSpeed() * 0.24F;
+            float distanceVariable = maxSpeed * 0.24F;
 
             // 移動開始
             leftMotor.startSynchronization();
@@ -37,13 +35,13 @@ public class PIDController extends AbstractUtil {
                 float currentSpeed;
                 if (tachoCount > cum - distanceVariable) {
                     //減速部
-                    currentSpeed = (getMaxSpeed() - getMinSpeed()) * (cum - tachoCount) / distanceVariable + getMinSpeed();
+                    currentSpeed = (maxSpeed - getMinSpeed()) * (cum - tachoCount) / distanceVariable + getMinSpeed();
                 } else if (tachoCount < distanceVariable) {
                     //加速部
-                    currentSpeed = (getMaxSpeed() - getMinSpeed()) * tachoCount / distanceVariable + getMinSpeed();
+                    currentSpeed = (maxSpeed - getMinSpeed()) * tachoCount / distanceVariable + getMinSpeed();
                 } else {
                     //巡航部
-                    currentSpeed = getMaxSpeed();
+                    currentSpeed = maxSpeed;
                 }
 
                 float colorValue = colorSensor.getRedValue();

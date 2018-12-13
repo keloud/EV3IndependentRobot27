@@ -1,6 +1,9 @@
 package info.keloud.tec.ev3lejos;
 
-import info.keloud.tec.ev3lejos.action.*;
+import info.keloud.tec.ev3lejos.action.Arm;
+import info.keloud.tec.ev3lejos.action.Move;
+import info.keloud.tec.ev3lejos.action.MoveColor;
+import info.keloud.tec.ev3lejos.action.Turn;
 import lejos.hardware.Button;
 
 import static info.keloud.tec.ev3lejos.Main.gyroSensor;
@@ -21,10 +24,13 @@ class EV3 {
         // 本選プログラム
 
         // 探索テスト
-        new Probe().run(90);
+        //new Probe().run(90);
 
         // ライントレーサー
         //new PIDController().run(800, 100);
+
+        new Move().run(800, 10);
+        new Move().run(800, -10);
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();

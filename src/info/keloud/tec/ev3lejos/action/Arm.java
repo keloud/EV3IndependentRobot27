@@ -6,25 +6,24 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.centerMotor;
 
 public class Arm extends AbstractUtil {
+    private int angle = 360;
+
     public void run() {
         // スムーズ移動の設定
         centerMotor.setAcceleration(8000);
 
         // 速度設定
-        setMaxSpeed(centerMotor.getMaxSpeed());
-        centerMotor.setSpeed(getMaxSpeed());
+        centerMotor.setSpeed(centerMotor.getMaxSpeed());
 
         // アーム開閉状態を取得し、開閉を決める
         // trueならば開いている
         if (Main.isArmOpen) {
-            setAngle(-360);
-        } else {
-            setAngle(360);
+            angle = -angle;
         }
 
         try {
             // 移動開始
-            centerMotor.rotate((int) getAngle(), true);
+            centerMotor.rotate(angle, true);
         } catch (Exception e) {
             Sound.buzz();
         } finally {

@@ -6,9 +6,8 @@ import static info.keloud.tec.ev3lejos.Main.*;
 
 // 指定した色まで前進する
 public class MoveColor extends AbstractUtil {
-    public void run(float speed, String color, boolean direction) {
-        setMaxSpeed(speed);
-        setColorId(color);
+    public void run(float maxSpeed, String color, boolean direction) {
+        int colorId = getColorId(color);
 
         try {
             // スムーズ移動の設定
@@ -16,8 +15,8 @@ public class MoveColor extends AbstractUtil {
             rightMotor.setAcceleration(1000);
 
             //速度設定
-            leftMotor.setSpeed(getMaxSpeed());
-            rightMotor.setSpeed(getMaxSpeed());
+            leftMotor.setSpeed(maxSpeed);
+            rightMotor.setSpeed(maxSpeed);
 
             // 移動開始
             if (direction) {
@@ -34,7 +33,7 @@ public class MoveColor extends AbstractUtil {
 
             // 指定の色を見つけるまで移動する
             while (true) {
-                if (colorSensor.getColorID() == getColorId()) {
+                if (colorSensor.getColorID() == colorId) {
                     leftMotor.startSynchronization();
                     leftMotor.stop();
                     rightMotor.stop();
@@ -48,7 +47,7 @@ public class MoveColor extends AbstractUtil {
     }
 
     // 前進用短縮メソッド
-    public void run(float speed, String color) {
-        this.run(speed, color, true);
+    public void run(float maxSpeed, String color) {
+        this.run(maxSpeed, color, true);
     }
 }
