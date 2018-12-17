@@ -19,7 +19,7 @@ class EV3 {
         gyroSensor.initGyro();
 
         // 予選プログラム
-        //yosen();
+        yosen();
 
         // 本選プログラム
 
@@ -28,9 +28,6 @@ class EV3 {
 
         // ライントレーサー
         //new PIDController().run(800, 100);
-
-        new Move().run(800, 10);
-        new Move().run(800, -10);
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
@@ -60,7 +57,7 @@ class EV3 {
         // ペットボトルをつかむ
         new Arm().run();
         // 置く場所にゆっくり向く
-        new Turn().run(100, 65);
+        new Turn().run(100, 75);
         // 置く場所の赤色まで進む
         new MoveColor().run(maxSpeed, "RED", true);
         // ペットボトルを放して下がる
@@ -71,8 +68,8 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -145);
         // 左のペットボトルに向く
-        new Turn().run(maxSpeed, -50);
         //new Probe().run(90);
+        new Turn().run(maxSpeed, 50);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
