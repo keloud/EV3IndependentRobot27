@@ -6,7 +6,6 @@ import lejos.robotics.Color;
 
 public class ColorSensor {
     private EV3ColorSensor color;
-    private String modeName;
 
     public ColorSensor() {
         color = new EV3ColorSensor(SensorPort.S1);
@@ -16,26 +15,19 @@ public class ColorSensor {
     public float getColorID() {
         float[] colorValue = new float[color.getColorIDMode().sampleSize()];
         color.getColorIDMode().fetchSample(colorValue, 0);
-        modeName = color.getName();
         return colorValue[0];
     }
 
     public float getRedValue() {
         float[] colorValue = new float[color.getRedMode().sampleSize()];
         color.getRedMode().fetchSample(colorValue, 0);
-        modeName = color.getName();
         return colorValue[0];
     }
 
     public float[] getRGBValue() {
         float[] colorValue = new float[color.getRGBMode().sampleSize()];
         color.getRGBMode().fetchSample(colorValue, 0);
-        modeName = color.getName();
         return colorValue;
-    }
-
-    public String getModeName() {
-        return modeName;
     }
 
     public int getColorId(float red, float green, float blue) {

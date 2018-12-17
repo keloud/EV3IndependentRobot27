@@ -1,13 +1,10 @@
 package info.keloud.tec.ev3lejos;
 
-import info.keloud.tec.ev3lejos.action.Arm;
-import info.keloud.tec.ev3lejos.action.Move;
-import info.keloud.tec.ev3lejos.action.MoveColor;
-import info.keloud.tec.ev3lejos.action.Turn;
+import info.keloud.tec.ev3lejos.action.*;
 import lejos.hardware.Button;
+import lejos.hardware.Sound;
 
-import static info.keloud.tec.ev3lejos.Main.gyroSensor;
-import static info.keloud.tec.ev3lejos.Main.sensorUpdater;
+import static info.keloud.tec.ev3lejos.Main.*;
 
 class EV3 {
     void run() {
@@ -17,14 +14,23 @@ class EV3 {
 
         // センサ情報の初期化
         gyroSensor.initGyro();
+        leftMotor.resetTachoCount();
+        rightMotor.resetTachoCount();
+
+        // 音を鳴らす
+        Sound.beepSequenceUp();
+
+        // ワーク3本運搬
+        //bottles();
 
         // 予選プログラム
-        yosen();
+        //preliminary_buttle();
 
-        // 本選プログラム
+        // 決勝プログラム
+        //final_buttle();
 
         // 探索テスト
-        //new Probe().run(90);
+        new Probe().run(90);
 
         // ライントレーサー
         //new PIDController().run(800, 100);
@@ -34,7 +40,7 @@ class EV3 {
         sensorUpdater.stopUpdaterFlag();
     }
 
-    private void yosen() {
+    private void bottles() {
         float maxSpeed = 800;
 
         // アームを空ける
@@ -64,7 +70,7 @@ class EV3 {
         new Arm().run();
         new Move().run(maxSpeed, -15);
         // マップ中央に向く
-        new Turn().run(maxSpeed, -gyroSensor.getValue());
+        new Turn().run(maxSpeed, -15);
         // マップ中央まで進む
         new Move().run(maxSpeed, -145);
         // 左のペットボトルに向く
@@ -83,6 +89,32 @@ class EV3 {
         new Move().run(maxSpeed, -15);
         // マップ中央に向く
         new Turn().run(maxSpeed, 15);
+
+    }
+
+    private void final_buttle() {
+        float maxSpeed = 800;
+
+        // 追加ワーク範囲中央へ進む
+        new Move().run(800, -105);
+        // 探索
+        new Probe().run(350);
+        // 探索した向きへ進む
+        new Move().run(800, 15);
+        // 探索
+        new Probe().run(90);
+        // 探索した向きに進む
+        new MoveUltrasonic().run(800, 15);
+        // ペットボトルまでつっこむ
+        new Move().run(maxSpeed, 18);
+        // ペットボトルをつかむ
+        new Arm().run();
+        // 置く場所のまでゆっくり向く
+    }
+
+    private void preliminary_buttle() {
+        float maxSpeed = 800;
+
         // 帰宅場所の黄色まで進む
         new MoveColor().run(maxSpeed, "YELLOW", false);
     }

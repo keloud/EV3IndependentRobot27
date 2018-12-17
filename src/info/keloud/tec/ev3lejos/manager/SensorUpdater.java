@@ -28,7 +28,7 @@ public class SensorUpdater extends Thread {
                 LCD.clear(1);
                 LCD.drawString("L:" + leftMotor.getTachoCount() + " R:" + rightMotor.getTachoCount() + " C:" + centerMotor.getTachoCount(), 1, 1);
                 LCD.clear(2);
-                LCD.drawString("L:" + leftMotor.getSpeed() + " R:" + rightMotor.getSpeed() + " C:" + centerMotor.getSpeed(), 1, 2);
+                LCD.drawString("L:" + leftMotor.getMaxSpeed() + " R:" + rightMotor.getMaxSpeed() + " C:" + centerMotor.getMaxSpeed(), 1, 2);
                 LCD.clear(3);
                 LCD.drawString("ColorName:" + colorSensor.getColorName((int) colorSensor.getColorID()), 1, 3);
                 LCD.clear(4);
