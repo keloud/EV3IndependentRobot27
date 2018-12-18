@@ -8,7 +8,7 @@ import static info.keloud.tec.ev3lejos.Main.*;
 
 class EV3 {
     void run() {
-        // Enterキーを押して次に進む
+        // Enterキーを押して次に進む 54 + 42 + 9 + 44
         Button.ENTER.waitForPress();
         sensorUpdater.setStopwatchFlag(true);
 
@@ -30,7 +30,7 @@ class EV3 {
         //final_buttle();
 
         // 探索テスト
-        new Probe().run(90);
+        new Probe().run(-90);
 
         // ライントレーサー
         //new PIDController().run(800, 100);
@@ -56,14 +56,13 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -160);
         // 右のペットボトルに向く
-        //new Probe().run(-75);
         new Turn().run(maxSpeed, -50);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
         new Arm().run();
         // 置く場所にゆっくり向く
-        new Turn().run(100, 75);
+        new Turn().run(100, 65);
         // 置く場所の赤色まで進む
         new MoveColor().run(maxSpeed, "RED", true);
         // ペットボトルを放して下がる
@@ -74,8 +73,8 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -145);
         // 左のペットボトルに向く
-        //new Probe().run(90);
-        new Turn().run(maxSpeed, 50);
+        new Probe().run(90);
+        //new Turn().run(maxSpeed, 50);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
@@ -89,7 +88,6 @@ class EV3 {
         new Move().run(maxSpeed, -15);
         // マップ中央に向く
         new Turn().run(maxSpeed, 15);
-
     }
 
     private void final_buttle() {

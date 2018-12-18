@@ -8,13 +8,6 @@ public class Probe extends AbstractUtil {
     public void run(int proveRangeAngle) {
         int maxSpeed = 100;
 
-        // 利用するモーターを選択
-        if (0 < proveRangeAngle) {
-
-        } else {
-
-        }
-
         try {
             // スムーズ移動の設定
             leftMotor.setAcceleration(1000);
@@ -31,20 +24,17 @@ public class Probe extends AbstractUtil {
             leftMotor.endSynchronization();
 
             // 探査
-            float proveRangeTachoCount = distance2Cumulative(angle2Distance(proveRangeAngle));
             float shortRange = ultrasonicSensor.getValue();
             float currentRange;
 
-            int initLeftTachoCount = leftMotor.getTachoCount();
-            int initRightTachoCount = rightMotor.getTachoCount();
             int shortRangeLeftTachoCount = 0;
             int shortRangeRightTachoCount = 0;
             while (leftMotor.isMoving() || rightMotor.isMoving()) {
                 currentRange = ultrasonicSensor.getValue();
                 if (currentRange < shortRange) {
                     shortRange = currentRange;
-                    shortRangeLeftTachoCount = leftMotor.getTachoCount() - initLeftTachoCount;
-                    shortRangeRightTachoCount = rightMotor.getTachoCount() - initRightTachoCount;
+                    shortRangeLeftTachoCount = leftMotor.getTachoCount();
+                    shortRangeRightTachoCount = rightMotor.getTachoCount();
                 }
             }
 
