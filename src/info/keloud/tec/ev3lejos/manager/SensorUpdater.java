@@ -11,6 +11,7 @@ public class SensorUpdater extends Thread {
     private Stopwatch stopwatch;
     private boolean updaterFlag;
     private boolean stopwatchFlag;
+    private int time = 600000;
 
     public SensorUpdater() {
         stopwatch = new Stopwatch();
@@ -41,7 +42,7 @@ public class SensorUpdater extends Thread {
                 LCD.drawString("Timer  :" + stopwatch.elapsed(), 1, 7);
                 LCD.refresh();
                 // 1分後にマシンを停止させる
-                if (stopwatch.elapsed() >= 60000 && stopwatchFlag) {
+                if (stopwatch.elapsed() >= time && stopwatchFlag) {
                     Sound.twoBeeps();
                     System.exit(0);
                 }
@@ -59,5 +60,13 @@ public class SensorUpdater extends Thread {
     public void setStopwatchFlag(boolean flg) {
         stopwatch.reset();
         stopwatchFlag = flg;
+    }
+
+    public void setPreliminaryButtle() {
+        time = 60000;
+    }
+
+    public void setFinalButtle() {
+        time = 120000;
     }
 }

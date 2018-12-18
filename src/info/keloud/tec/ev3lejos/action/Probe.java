@@ -27,16 +27,16 @@ public class Probe extends AbstractUtil {
             float shortRange = ultrasonicSensor.getValue();
             float currentRange;
 
-            int shortRangeLeftTachoCount = 0;
-            int shortRangeRightTachoCount = 0;
-            while (leftMotor.isMoving() || rightMotor.isMoving()) {
+            int shortRangeLeftTachoCount = leftMotor.getTachoCount();
+            int shortRangeRightTachoCount = rightMotor.getTachoCount();
+            do {
                 currentRange = ultrasonicSensor.getValue();
                 if (currentRange < shortRange) {
                     shortRange = currentRange;
                     shortRangeLeftTachoCount = leftMotor.getTachoCount();
                     shortRangeRightTachoCount = rightMotor.getTachoCount();
                 }
-            }
+            } while (leftMotor.isMoving() || rightMotor.isMoving());
 
             // 止まるまで待つ
             leftMotor.waitComplete();

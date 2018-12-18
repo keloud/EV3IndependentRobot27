@@ -20,17 +20,14 @@ class EV3 {
         // 音を鳴らす
         Sound.beepSequenceUp();
 
-        // ワーク3本運搬
-        //bottles();
-
         // 予選プログラム
-        //preliminary_buttle();
+        //preliminaryButtle();
 
         // 決勝プログラム
-        //final_buttle();
+        finalButtle();
 
         // 探索テスト
-        new Probe().run(-90);
+        //new Probe().run(-90);
 
         // ライントレーサー
         //new PIDController().run(800, 100);
@@ -41,6 +38,7 @@ class EV3 {
     }
 
     private void bottles() {
+        // 最大速度
         float maxSpeed = 800;
 
         // アームを空ける
@@ -57,6 +55,7 @@ class EV3 {
         new Move().run(maxSpeed, -160);
         // 右のペットボトルに向く
         new Turn().run(maxSpeed, -50);
+        //new Probe().run(-75);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
@@ -73,8 +72,8 @@ class EV3 {
         // マップ中央まで進む
         new Move().run(maxSpeed, -145);
         // 左のペットボトルに向く
-        new Probe().run(90);
-        //new Turn().run(maxSpeed, 50);
+        new Turn().run(maxSpeed, 50);
+        //new Probe().run(75);
         // ペットボトルまでつっこむ
         new Move().run(maxSpeed, 50);
         // ペットボトルをつかむ
@@ -90,28 +89,47 @@ class EV3 {
         new Turn().run(maxSpeed, 15);
     }
 
-    private void final_buttle() {
+    private void finalButtle() {
+        // 最大速度
         float maxSpeed = 800;
 
+        // 決勝時間(2分に設定)
+        sensorUpdater.setFinalButtle();
+
+        // 3本のワークを取得する
+        bottles();
+
         // 追加ワーク範囲中央へ進む
-        new Move().run(800, -105);
+        new Move().run(maxSpeed, -105);
         // 探索
         new Probe().run(350);
         // 探索した向きへ進む
-        new Move().run(800, 15);
+        new Move().run(maxSpeed, 15);
         // 探索
         new Probe().run(90);
         // 探索した向きに進む
-        new MoveUltrasonic().run(800, 15);
+        new MoveUltrasonic().run(maxSpeed, 5);
         // ペットボトルまでつっこむ
-        new Move().run(maxSpeed, 18);
+        new Move().run(maxSpeed, 7);
         // ペットボトルをつかむ
         new Arm().run();
-        // 置く場所のまでゆっくり向く
+        // 緑の線までゆっくり向く
+        new Turn().run(100, 180);
+        // 緑の線まで行く
+        new MoveColor().run(800, "GREEN");
+        // とりあえず、ライントレース
+        new PIDController().run(500, 100);
     }
 
-    private void preliminary_buttle() {
+    private void preliminaryButtle() {
+        // 最大速度
         float maxSpeed = 800;
+
+        // 予選時間(1分に設定)
+        sensorUpdater.setPreliminaryButtle();
+
+        // 3本のワークを取得する
+        bottles();
 
         // 帰宅場所の黄色まで進む
         new MoveColor().run(maxSpeed, "YELLOW", false);
