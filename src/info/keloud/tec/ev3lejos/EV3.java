@@ -132,6 +132,32 @@ class EV3 {
         // ペットボトルを放して下がる
         new Arm().run();
         new Move().run(maxSpeed, -15);
+        // 追加ワーク範囲中央へ進む
+        new Move().run(maxSpeed, -105);
+        // 探索
+        gyroSensor.initGyro();
+        new Probe().run(350);
+        // 探索した向きへ進む
+        new MoveUltrasonic().run(maxSpeed, 0.4F);
+        // 探索
+        new Turn().run(500, -30);
+        new Probe().run(70);
+        // 探索した向きに進む
+        new MoveUltrasonic().run(maxSpeed, 0.1F);
+        // ペットボトルをつかむ
+        new Arm().run();
+        // 緑の線に向く
+        new Turn().run(100, 180);
+        // 緑の線まで行く
+        new MoveColor().run(100, "GREEN");
+        // 前に向く
+        float gyro2 = gyroSensor.getValue();
+        new Turn().run(100, (gyro / 360) + 90);
+        // 置く場所の赤色まで進む
+        new MoveColor().run(maxSpeed, "RED");
+        // ペットボトルを放して下がる
+        new Arm().run();
+        new Move().run(maxSpeed, -15);
     }
 
     private void preliminaryButtle() {
