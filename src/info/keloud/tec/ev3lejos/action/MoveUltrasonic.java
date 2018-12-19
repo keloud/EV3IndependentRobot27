@@ -40,6 +40,9 @@ public class MoveUltrasonic extends AbstractUtil {
                     break;
                 }
             }
+
+            leftMotor.waitComplete();
+            rightMotor.waitComplete();
         } catch (Exception e) {
             Sound.buzz();
         }
