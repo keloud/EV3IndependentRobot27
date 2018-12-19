@@ -30,6 +30,8 @@ public class Main {
         LCD.clear(6);
         LCD.drawString("Init ColorSensor", 1, 6);
         LCD.refresh();
+        // 音を鳴らす
+        Sound.beep();
         // カラーセンサーの初期化
         colorSensor = new ColorSensor();
 
@@ -37,6 +39,8 @@ public class Main {
         LCD.clear(6);
         LCD.drawString("Init UltrasonicSensor", 1, 6);
         LCD.refresh();
+        // 音を鳴らす
+        Sound.beep();
         // 超音波センサーの初期化
         ultrasonicSensor = new UltrasonicSensor();
 
@@ -44,6 +48,8 @@ public class Main {
         LCD.clear(6);
         LCD.drawString("Init GyroSensor", 1, 6);
         LCD.refresh();
+        // 音を鳴らす
+        Sound.beep();
         // ジャイロセンサーの初期化
         gyroSensor = new GyroSensor();
 
@@ -51,6 +57,8 @@ public class Main {
         LCD.clear(6);
         LCD.drawString("Init TouchSensor", 1, 6);
         LCD.refresh();
+        // 音を鳴らす
+        Sound.beep();
         // タッチセンサーの初期化
         touchSensor = new TouchSensor();
 
@@ -58,12 +66,16 @@ public class Main {
         LCD.clear(6);
         LCD.drawString("Init Motor", 1, 6);
         LCD.refresh();
-        // モーターの初期
+        // 音を鳴らす
+        Sound.beep();
+        // モーターの初期化
         centerMotor = new EV3MediumRegulatedMotor(MotorPort.A);
         leftMotor = new EV3LargeRegulatedMotor(MotorPort.B);
         rightMotor = new EV3LargeRegulatedMotor(MotorPort.C);
         leftMotor.synchronizeWith(new EV3LargeRegulatedMotor[]{rightMotor});
 
+        // 音を鳴らす
+        Sound.beep();
         // 初期アーム開閉メニュークラスを生成する
         new InitArm();
 
@@ -71,10 +83,14 @@ public class Main {
         LCD.clear(6);
         LCD.drawString("Init Thread", 1, 6);
         LCD.refresh();
-        // センサ――と画面更新用スレッドの生成
+        // 音を鳴らす
+        Sound.beep();
+        // センサ―と画面更新用スレッドの生成
         sensorUpdater = new SensorUpdater();
         sensorUpdater.start();
 
+        // 音を鳴らす
+        Sound.beep();
         // Gyroの再初期化
         gyroSensor.initGyro();
 

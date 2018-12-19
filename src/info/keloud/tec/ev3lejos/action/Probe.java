@@ -42,7 +42,7 @@ public class Probe extends AbstractUtil {
             leftMotor.waitComplete();
             rightMotor.waitComplete();
 
-            // 一番近いスポットへの角度を設定し、移動する
+            // 一番近いスポットへの角度を設定し、回転する
             leftMotor.startSynchronization();
             leftMotor.rotateTo(shortRangeLeftTachoCount);
             rightMotor.rotateTo(shortRangeRightTachoCount);

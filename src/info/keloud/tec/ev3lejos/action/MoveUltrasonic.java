@@ -32,7 +32,7 @@ public class MoveUltrasonic extends AbstractUtil {
 
             // 指定の距離まで移動する
             while (true) {
-                if (ultrasonicSensor.getValue() > distance) {
+                if (ultrasonicSensor.getValue() <= distance) {
                     leftMotor.startSynchronization();
                     leftMotor.stop();
                     rightMotor.stop();
