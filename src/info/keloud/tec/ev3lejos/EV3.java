@@ -113,7 +113,7 @@ class EV3 {
         gyroSensor.initGyro();
         new Move().run(maxSpeed, -105);
         // 探索
-        int prove = new Probe().run(170);
+        int prove = new Probe().run(180);
         if (prove == 0) {
             new Probe().run(170);
         }
