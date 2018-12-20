@@ -1,6 +1,7 @@
 package info.keloud.tec.ev3lejos.action;
 
 import lejos.hardware.Sound;
+import lejos.robotics.Color;
 
 import static info.keloud.tec.ev3lejos.Main.*;
 
@@ -33,6 +34,13 @@ public class MoveUltrasonic extends AbstractUtil {
             // 指定の距離まで移動する
             while (true) {
                 if (ultrasonicSensor.getValue() <= distance) {
+                    leftMotor.startSynchronization();
+                    leftMotor.stop();
+                    rightMotor.stop();
+                    leftMotor.endSynchronization();
+                    break;
+                }
+                if (colorSensor.getColorID() == Color.BLACK) {
                     leftMotor.startSynchronization();
                     leftMotor.stop();
                     rightMotor.stop();

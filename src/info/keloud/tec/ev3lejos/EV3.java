@@ -123,7 +123,7 @@ class EV3 {
         // 緑の線に向く
         new Turn().run(100, 180);
         // 緑の線まで行く
-        new MoveColor().run(100, "GREEN");
+        new MoveColor().run(300, "GREEN");
         // 前に向く
         float gyro = gyroSensor.getValue();
         new Turn().run(100, (gyro / 360) + 90);
@@ -149,7 +149,7 @@ class EV3 {
         // 緑の線に向く
         new Turn().run(100, 180);
         // 緑の線まで行く
-        new MoveColor().run(100, "GREEN");
+        new MoveColor().run(300, "GREEN");
         // 前に向く
         float gyro2 = gyroSensor.getValue();
         new Turn().run(100, (gyro / 360) + 90);
