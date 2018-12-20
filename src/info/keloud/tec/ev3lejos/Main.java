@@ -21,11 +21,11 @@ public class Main {
     public static EV3MediumRegulatedMotor centerMotor;
     public static EV3LargeRegulatedMotor leftMotor;
     public static EV3LargeRegulatedMotor rightMotor;
-    static SensorUpdater sensorUpdater;
-    public static Boolean mode;
-
-    //trueならば開いている
+    // trueならば予選モード
+    public static boolean mode;
+    // trueならば開いている
     public static boolean isArmOpen = false;
+    static SensorUpdater sensorUpdater;
 
     public static void main(String[] args) {
         // ディスプレイ案内開始

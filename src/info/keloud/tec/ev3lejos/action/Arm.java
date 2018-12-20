@@ -6,7 +6,7 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.centerMotor;
 
 public class Arm extends AbstractUtil {
-    private int angle = 360;
+    private int angle = 380;
 
     public void run() {
         // スムーズ移動の設定
