@@ -2,6 +2,7 @@ package info.keloud.tec.ev3lejos;
 
 import info.keloud.tec.ev3lejos.manager.SensorUpdater;
 import info.keloud.tec.ev3lejos.menu.InitArm;
+import info.keloud.tec.ev3lejos.menu.SelectMode;
 import info.keloud.tec.ev3lejos.sensor.ColorSensor;
 import info.keloud.tec.ev3lejos.sensor.GyroSensor;
 import info.keloud.tec.ev3lejos.sensor.TouchSensor;
@@ -21,6 +22,7 @@ public class Main {
     public static EV3LargeRegulatedMotor leftMotor;
     public static EV3LargeRegulatedMotor rightMotor;
     static SensorUpdater sensorUpdater;
+    public static Boolean mode;
 
     //trueならば開いている
     public static boolean isArmOpen = false;
@@ -78,6 +80,10 @@ public class Main {
         Sound.beep();
         // 初期アーム開閉メニュークラスを生成する
         new InitArm();
+        // 予選・決勝選択
+        new SelectMode();
+        // ジャイロセンサーを再初期化する
+        //new InitGyro();
 
         // ディスプレイ案内の更新
         LCD.clear(6);

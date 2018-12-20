@@ -20,20 +20,22 @@ class EV3 {
         // 音を鳴らす
         Sound.beepSequenceUp();
 
-        // 予選プログラム
-        //preliminaryButtle();
-
-        // 決勝プログラム
-        finalButtle();
-
         // 探索テスト
-        //new Probe().run(-90);
+        //new Probe().run(70);
 
         // ライントレーサー
         //new PIDController().run(800, 100);
 
         // 超音波センサを用いた近接走行テスト
         //new MoveUltrasonic().run(800, 0.1F);
+
+        if (mode) {
+            // 予選プログラム
+            preliminaryButtle();
+        } else {
+            // 決勝プログラム
+            finalButtle();
+        }
 
         // Enterキーを押して次に進む
         Button.ENTER.waitForPress();
@@ -106,6 +108,7 @@ class EV3 {
         leftMotor.resetTachoCount();
         rightMotor.resetTachoCount();
 
+        /* 1本目 */
         // 追加ワーク範囲中央へ進む
         gyroSensor.initGyro();
         new Move().run(maxSpeed, -105);
@@ -140,6 +143,7 @@ class EV3 {
         new Arm().run();
         new Move().run(maxSpeed, -15);
 
+        /* 2本目 */
         // 追加ワーク範囲中央へ進む
         gyroSensor.initGyro();
         new Move().run(maxSpeed, -105);

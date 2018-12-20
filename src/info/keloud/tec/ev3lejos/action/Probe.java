@@ -54,6 +54,8 @@ public class Probe extends AbstractUtil {
                 rightMotor.waitComplete();
 
                 return 1;
+            } else {
+                return 0;
             }
         } catch (Exception e) {
             Sound.buzz();
