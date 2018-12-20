@@ -5,7 +5,7 @@ import lejos.hardware.Sound;
 import static info.keloud.tec.ev3lejos.Main.*;
 
 public class Probe extends AbstractUtil {
-    public void run(int proveRangeAngle) {
+    public int run(int proveRangeAngle) {
         int maxSpeed = 100;
 
         try {
@@ -42,17 +42,22 @@ public class Probe extends AbstractUtil {
             leftMotor.waitComplete();
             rightMotor.waitComplete();
 
-            // 一番近いスポットへの角度を設定し、回転する
-            leftMotor.startSynchronization();
-            leftMotor.rotateTo(shortRangeLeftTachoCount);
-            rightMotor.rotateTo(shortRangeRightTachoCount);
-            leftMotor.endSynchronization();
+            if (shortRange < 1.8F) {
+                // 一番近いスポットへの角度を設定し、回転する
+                leftMotor.startSynchronization();
+                leftMotor.rotateTo(shortRangeLeftTachoCount);
+                rightMotor.rotateTo(shortRangeRightTachoCount);
+                leftMotor.endSynchronization();
 
-            // 止まるまで待つ
-            leftMotor.waitComplete();
-            rightMotor.waitComplete();
+                // 止まるまで待つ
+                leftMotor.waitComplete();
+                rightMotor.waitComplete();
+
+                return 1;
+            }
         } catch (Exception e) {
             Sound.buzz();
         }
+        return 0;
     }
 }

@@ -107,10 +107,13 @@ class EV3 {
         rightMotor.resetTachoCount();
 
         // 追加ワーク範囲中央へ進む
+        gyroSensor.initGyro();
         new Move().run(maxSpeed, -105);
         // 探索
-        gyroSensor.initGyro();
-        new Probe().run(350);
+        int prove = new Probe().run(170);
+        if (prove == 0) {
+            new Probe().run(170);
+        }
         // 探索した向きへ進む
         new MoveUltrasonic().run(maxSpeed, 0.4F);
         // 探索
@@ -126,17 +129,25 @@ class EV3 {
         new MoveColor().run(300, "GREEN");
         // 前に向く
         float gyro = gyroSensor.getValue();
-        new Turn().run(100, (gyro / 360) + 90);
+        if (prove == 0) {
+            new Turn().run(100, (gyro / 180) + 90);
+        } else {
+            new Turn().run(100, (gyro / 180) - 90);
+        }
         // 置く場所の赤色まで進む
         new MoveColor().run(maxSpeed, "RED");
         // ペットボトルを放して下がる
         new Arm().run();
         new Move().run(maxSpeed, -15);
+
         // 追加ワーク範囲中央へ進む
+        gyroSensor.initGyro();
         new Move().run(maxSpeed, -105);
         // 探索
-        gyroSensor.initGyro();
-        new Probe().run(350);
+        int prove2 = new Probe().run(170);
+        if (prove2 == 0) {
+            new Probe().run(170);
+        }
         // 探索した向きへ進む
         new MoveUltrasonic().run(maxSpeed, 0.4F);
         // 探索
@@ -152,7 +163,11 @@ class EV3 {
         new MoveColor().run(300, "GREEN");
         // 前に向く
         float gyro2 = gyroSensor.getValue();
-        new Turn().run(100, (gyro / 360) + 90);
+        if (prove2 == 0) {
+            new Turn().run(100, (gyro2 / 180) + 90);
+        } else {
+            new Turn().run(100, (gyro2 / 180) - 90);
+        }
         // 置く場所の赤色まで進む
         new MoveColor().run(maxSpeed, "RED");
         // ペットボトルを放して下がる
